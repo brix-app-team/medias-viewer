@@ -5,7 +5,7 @@
 
 A powerful and customizable Flutter media viewer for images and videos with zoom, swipe navigation, and video controls.
 <p align="center">
-<img src="./video.gif"  width="40%" height="40%"/>
+<img src="https://github.com/brix-app-team/medias-viewer/blob/main/video.gif?raw=true"  width="40%" height="40%"/>
 </p>
 
 ## Features

@@ -26,7 +26,8 @@ class PageIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveStyle = style ??
+    final effectiveStyle =
+        style ??
         const IndicatorStyle(
           textStyle: TextStyle(
             color: Colors.white,
@@ -52,10 +53,7 @@ class PageIndicatorWidget extends StatelessWidget {
     );
 
     return SafeArea(
-      child: Align(
-        alignment: _getAlignment(position),
-        child: indicator,
-      ),
+      child: Align(alignment: _getAlignment(position), child: indicator),
     );
   }
 

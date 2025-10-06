@@ -17,60 +17,32 @@ class MediaItem {
     this.assetPath,
     this.tag,
   }) : assert(
-          url != null || path != null || assetPath != null,
-          'At least one of url, path, or assetPath must be provided',
-        );
+         url != null || path != null || assetPath != null,
+         'At least one of url, path, or assetPath must be provided',
+       );
 
   /// Creates an image media item from a network URL.
-  const MediaItem.imageUrl(
-    String url, {
-    String? tag,
-  }) : this(
-          type: MediaType.image,
-          url: url,
-          tag: tag,
-        );
+  const MediaItem.imageUrl(String url, {String? tag})
+    : this(type: MediaType.image, url: url, tag: tag);
 
   /// Creates an image media item from a local file path.
-  const MediaItem.imagePath(
-    String path, {
-    String? tag,
-  }) : this(
-          type: MediaType.image,
-          path: path,
-          tag: tag,
-        );
+  const MediaItem.imagePath(String path, {String? tag})
+    : this(type: MediaType.image, path: path, tag: tag);
 
   /// Creates an image media item from an asset path.
-  const MediaItem.imageAsset(
-    String assetPath, {
-    String? tag,
-  }) : this(
-          type: MediaType.image,
-          assetPath: assetPath,
-          tag: tag,
-        );
+  const MediaItem.imageAsset(String assetPath, {String? tag})
+    : this(type: MediaType.image, assetPath: assetPath, tag: tag);
 
   /// Creates a video media item from a network URL.
-  const MediaItem.videoUrl(String url)
-      : this(
-          type: MediaType.video,
-          url: url,
-        );
+  const MediaItem.videoUrl(String url) : this(type: MediaType.video, url: url);
 
   /// Creates a video media item from a local file path.
   const MediaItem.videoPath(String path)
-      : this(
-          type: MediaType.video,
-          path: path,
-        );
+    : this(type: MediaType.video, path: path);
 
   /// Creates a video media item from an asset path.
   const MediaItem.videoAsset(String assetPath)
-      : this(
-          type: MediaType.video,
-          assetPath: assetPath,
-        );
+    : this(type: MediaType.video, assetPath: assetPath);
 
   /// Creates a media item from a URL with automatic type detection.
   ///
@@ -88,17 +60,10 @@ class MediaItem {
   /// MediaItem.url('https://example.com/photo.jpg')  // Detected as image
   /// MediaItem.url('https://example.com/video.mp4')  // Detected as video
   /// ```
-  factory MediaItem.url(
-    String url, {
-    String? tag,
-  }) {
+  factory MediaItem.url(String url, {String? tag}) {
     final detectedType = MediaTypeDetector.detectFromUrl(url);
 
-    return MediaItem(
-      type: detectedType,
-      url: url,
-      tag: tag,
-    );
+    return MediaItem(type: detectedType, url: url, tag: tag);
   }
 
   /// Creates a media item from a local file path with automatic type detection.
@@ -107,17 +72,10 @@ class MediaItem {
   /// file extension in the path.
   ///
   /// See [MediaItem.url] for supported extensions.
-  factory MediaItem.path(
-    String path, {
-    String? tag,
-  }) {
+  factory MediaItem.path(String path, {String? tag}) {
     final detectedType = MediaTypeDetector.detectFromUrl(path);
 
-    return MediaItem(
-      type: detectedType,
-      path: path,
-      tag: tag,
-    );
+    return MediaItem(type: detectedType, path: path, tag: tag);
   }
 
   /// Creates a media item from an asset path with automatic type detection.
@@ -126,17 +84,10 @@ class MediaItem {
   /// file extension in the asset path.
   ///
   /// See [MediaItem.url] for supported extensions.
-  factory MediaItem.asset(
-    String assetPath, {
-    String? tag,
-  }) {
+  factory MediaItem.asset(String assetPath, {String? tag}) {
     final detectedType = MediaTypeDetector.detectFromUrl(assetPath);
 
-    return MediaItem(
-      type: detectedType,
-      assetPath: assetPath,
-      tag: tag,
-    );
+    return MediaItem(type: detectedType, assetPath: assetPath, tag: tag);
   }
 
   /// The type of media (image or video).

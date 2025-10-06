@@ -64,7 +64,7 @@ class _MediaViewerState extends State<MediaViewer> {
     super.initState();
     _currentIndex = widget.initialIndex;
     _pageController = PageController(initialPage: widget.initialIndex);
-    
+
     // Preload adjacent images for smooth transitions
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _precacheAdjacentImages();
@@ -80,7 +80,7 @@ class _MediaViewerState extends State<MediaViewer> {
   /// Precache adjacent images to prevent glitches during swipe
   void _precacheAdjacentImages() {
     if (!mounted) return;
-    
+
     // Precache previous image
     if (_currentIndex > 0) {
       final prevItem = widget.items[_currentIndex - 1];
@@ -88,7 +88,7 @@ class _MediaViewerState extends State<MediaViewer> {
         precacheImage(CachedNetworkImageProvider(prevItem.url!), context);
       }
     }
-    
+
     // Precache next image
     if (_currentIndex < widget.items.length - 1) {
       final nextItem = widget.items[_currentIndex + 1];

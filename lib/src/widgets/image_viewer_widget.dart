@@ -52,9 +52,7 @@ class ImageViewerWidget extends StatelessWidget {
       heroAttributes: item.tag != null
           ? PhotoViewHeroAttributes(tag: '${item.tag}_${config.heroTagSuffix}')
           : null,
-      backgroundDecoration: BoxDecoration(
-        color: config.backgroundColor,
-      ),
+      backgroundDecoration: BoxDecoration(color: config.backgroundColor),
       enableRotation: false,
       enablePanAlways: true,
       onTapUp: onTap != null
@@ -82,11 +80,10 @@ class ImageViewerWidget extends StatelessWidget {
         initialScale: PhotoViewComputedScale.contained,
         heroAttributes: item.tag != null
             ? PhotoViewHeroAttributes(
-                tag: '${item.tag}_${config.heroTagSuffix}')
+                tag: '${item.tag}_${config.heroTagSuffix}',
+              )
             : null,
-        backgroundDecoration: BoxDecoration(
-          color: config.backgroundColor,
-        ),
+        backgroundDecoration: BoxDecoration(color: config.backgroundColor),
         disableGestures: true,
         onTapUp: onTap != null
             ? (context, details, controllerValue) => onTap?.call()
@@ -95,8 +92,7 @@ class ImageViewerWidget extends StatelessWidget {
           child: CircularProgressIndicator(
             value: event == null
                 ? 0
-                : event.cumulativeBytesLoaded /
-                    (event.expectedTotalBytes ?? 1),
+                : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
             color: Colors.white,
           ),
         ),

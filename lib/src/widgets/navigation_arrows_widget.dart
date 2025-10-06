@@ -127,11 +127,7 @@ class _ArrowButton extends StatelessWidget {
             color: Colors.black26,
             shape: BoxShape.circle,
           ),
-          child: Icon(
-            icon,
-            color: color,
-            size: size,
-          ),
+          child: Icon(icon, color: color, size: size),
         ),
       ),
     );

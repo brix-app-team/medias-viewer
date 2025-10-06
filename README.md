@@ -55,8 +55,7 @@ A powerful and customizable Flutter media viewer for images and videos with zoom
 📱 **Platform Support**
 - ✅ Android
 - ✅ iOS
-- ✅ Web
-- ✅ Desktop (Windows, macOS, Linux)
+- ✅ Desktop (macOS)
 
 ## Installation
 

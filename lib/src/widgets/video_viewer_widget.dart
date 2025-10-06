@@ -48,14 +48,17 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
     try {
       // Create video player controller based on source
       if (widget.item.url != null) {
-        _videoPlayerController =
-            VideoPlayerController.networkUrl(Uri.parse(widget.item.url!));
+        _videoPlayerController = VideoPlayerController.networkUrl(
+          Uri.parse(widget.item.url!),
+        );
       } else if (widget.item.path != null) {
-        _videoPlayerController =
-            VideoPlayerController.file(File(widget.item.path!));
+        _videoPlayerController = VideoPlayerController.file(
+          File(widget.item.path!),
+        );
       } else if (widget.item.assetPath != null) {
-        _videoPlayerController =
-            VideoPlayerController.asset(widget.item.assetPath!);
+        _videoPlayerController = VideoPlayerController.asset(
+          widget.item.assetPath!,
+        );
       }
 
       if (_videoPlayerController == null) {
@@ -88,9 +91,7 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
         placeholder: Container(
           color: Colors.black,
           child: const Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
+            child: CircularProgressIndicator(color: Colors.white),
           ),
         ),
         errorBuilder: (context, errorMessage) {
@@ -143,7 +144,8 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
   }
 
   void _onVideoStateChanged() {
-    if (_videoPlayerController != null && widget.onPlayingStateChanged != null) {
+    if (_videoPlayerController != null &&
+        widget.onPlayingStateChanged != null) {
       widget.onPlayingStateChanged!(_videoPlayerController!.value.isPlaying);
     }
   }
@@ -168,11 +170,7 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Colors.white54,
-            ),
+            const Icon(Icons.error_outline, size: 64, color: Colors.white54),
             const SizedBox(height: 16),
             const Text(
               'Error loading video',
@@ -196,9 +194,7 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
       return Container(
         color: Colors.black,
         child: const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
+          child: CircularProgressIndicator(color: Colors.white),
         ),
       );
     }
@@ -206,11 +202,7 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
     return Container(
       color: widget.config.backgroundColor,
       child: SafeArea(
-        child: Center(
-          child: Chewie(
-            controller: _chewieController!,
-          ),
-        ),
+        child: Center(child: Chewie(controller: _chewieController!)),
       ),
     );
   }

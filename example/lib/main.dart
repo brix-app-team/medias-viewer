@@ -127,10 +127,7 @@ class ExampleHomePage extends StatelessWidget {
       child: ListTile(
         title: Text(
           title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         subtitle: Text(description),
         trailing: const Icon(Icons.arrow_forward_ios),
@@ -144,21 +141,11 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=1',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=2',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=3',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=4',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=5',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=1'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=2'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=3'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=4'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=5'),
           ],
           onDismissed: () => Navigator.of(context).pop(),
         ),
@@ -171,21 +158,15 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=10',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=10'),
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
             ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=11',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=11'),
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=12',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=12'),
           ],
           onDismissed: () => Navigator.of(context).pop(),
         ),
@@ -198,15 +179,9 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=20',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=21',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=22',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=20'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=21'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=22'),
           ],
           config: MediaViewerConfig(
             backgroundColor: Colors.blueGrey.shade900,
@@ -233,15 +208,9 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=30',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=31',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=32',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=30'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=31'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=32'),
           ],
           config: const MediaViewerConfig(
             enableImageZoom: false,
@@ -265,9 +234,7 @@ class ExampleHomePage extends StatelessWidget {
               'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
           ],
-          config: MediaViewerConfig(
-            autoPlayVideo: true,
-          ),
+          config: MediaViewerConfig(autoPlayVideo: true),
           onDismissed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -275,11 +242,9 @@ class ExampleHomePage extends StatelessWidget {
   }
 
   void _showGridGallery(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const GridGalleryPage(),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const GridGalleryPage()));
   }
 
   void _showArrowsGallery(BuildContext context) {
@@ -287,18 +252,10 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=60',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=61',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=62',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=63',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=60'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=61'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=62'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=63'),
           ],
           config: const MediaViewerConfig(
             showNavigationArrows: true,
@@ -317,15 +274,9 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=70',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=71',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=72',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=70'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=71'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=72'),
           ],
           config: const MediaViewerConfig(
             showBackButton: true,
@@ -342,15 +293,9 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=80',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=81',
-            ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=82',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=80'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=81'),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=82'),
           ],
           config: const MediaViewerConfig(
             enableDismissOnSwipeDown: true,
@@ -368,15 +313,11 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=90',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=90'),
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
             ),
-            const MediaItem.imageUrl(
-              'https://picsum.photos/800/600?random=91',
-            ),
+            const MediaItem.imageUrl('https://picsum.photos/800/600?random=91'),
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
@@ -469,9 +410,7 @@ class GridGalleryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Grid Gallery'),
-      ),
+      appBar: AppBar(title: const Text('Grid Gallery')),
       body: GridView.builder(
         padding: const EdgeInsets.all(8),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

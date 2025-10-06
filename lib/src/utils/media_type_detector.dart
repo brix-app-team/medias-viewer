@@ -65,18 +65,18 @@ class MediaTypeDetector {
     // Also matches extensions within query parameters like ?file=image.jpg
     final extensionPattern = RegExp(r'\.([a-zA-Z0-9]+)(?=[?&#\s]|$)');
     final matches = extensionPattern.allMatches(cleanUrl);
-    
+
     if (matches.isNotEmpty) {
       // Try each match from last to first to find a valid extension
       for (final match in matches.toList().reversed) {
         final extension = match.group(1)!.toLowerCase();
         // Check if it's a known image or video extension
-        if (_imageExtensions.contains(extension) || 
+        if (_imageExtensions.contains(extension) ||
             _videoExtensions.contains(extension)) {
           return extension;
         }
       }
-      
+
       // If no known extension found, return the last one anyway
       final lastMatch = matches.last;
       return lastMatch.group(1)!.toLowerCase();

@@ -29,11 +29,7 @@ class BackButtonWidget extends StatelessWidget {
               color: Colors.black38,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              Icons.close,
-              color: color,
-              size: 28,
-            ),
+            child: Icon(Icons.close, color: color, size: 28),
           ),
         ),
       ),

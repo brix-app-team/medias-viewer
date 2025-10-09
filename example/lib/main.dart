@@ -111,6 +111,13 @@ class ExampleHomePage extends StatelessWidget {
             description: 'Automatic media type detection',
             onTap: () => _showAutoDetectionGallery(context),
           ),
+          const SizedBox(height: 16),
+          _buildExampleCard(
+            context,
+            title: 'YouTube Video Gallery',
+            description: 'Play YouTube videos in the viewer',
+            onTap: () => _showYouTubeGallery(context),
+          ),
         ],
       ),
     );
@@ -354,15 +361,59 @@ class ExampleHomePage extends StatelessWidget {
             MediaItem.url(
               'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
             ),
-            // More images
+            MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
             MediaItem.url('https://picsum.photos/800/600?random=4.webp'),
             MediaItem.url('https://picsum.photos/800/600?random=5.jpg'),
+
+            // Mix with images
           ],
           config: MediaViewerConfig(
             enableAutoDetectMediaType: true,
             showNavigationArrows: true,
             showBackButton: true,
             backButtonPadding: const EdgeInsets.only(top: 40, left: 12),
+            enableDismissOnSwipeDown: true,
+            indicatorPosition: IndicatorPosition.topCenter,
+            indicatorStyle: const IndicatorStyle(
+              backgroundColor: Colors.black54,
+              borderRadius: 16,
+            ),
+          ),
+          onDismissed: () => Navigator.of(context).pop(),
+        ),
+      ),
+    );
+  }
+
+  void _showYouTubeGallery(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MediaViewer(
+          items: [
+            // YouTube videos
+            const MediaItem.youtubeUrl(
+              'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            ),
+            // Mix with images
+            const MediaItem.imageUrl(
+              'https://picsum.photos/800/600?random=100',
+            ),
+            // Another YouTube video (short URL format)
+            const MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0'),
+            // Regular video
+            const MediaItem.videoUrl(
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+            ),
+            // Another image
+            const MediaItem.imageUrl(
+              'https://picsum.photos/800/600?random=101',
+            ),
+          ],
+          config: MediaViewerConfig(
+            autoPlayVideo: true,
+            allowFullScreen: true,
+            showBackButton: true,
+            showNavigationArrows: true,
             enableDismissOnSwipeDown: true,
             indicatorPosition: IndicatorPosition.topCenter,
             indicatorStyle: const IndicatorStyle(

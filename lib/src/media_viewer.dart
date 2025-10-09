@@ -4,6 +4,7 @@ import 'models/media_item.dart';
 import 'models/media_viewer_config.dart';
 import 'widgets/image_viewer_widget.dart';
 import 'widgets/video_viewer_widget.dart';
+import 'widgets/youtube_viewer_widget.dart';
 import 'widgets/page_indicator_widget.dart';
 import 'widgets/navigation_arrows_widget.dart';
 import 'widgets/back_button_widget.dart';
@@ -160,6 +161,23 @@ class _MediaViewerState extends State<MediaViewer> {
                 item: item,
                 config: widget.config,
                 onTap: _handleTap,
+              );
+            } else if (item.isYouTube) {
+              return GestureDetector(
+                onTap: _handleTap,
+                child: YouTubeViewerWidget(
+                  key: ValueKey('youtube_$actualIndex'),
+                  item: item,
+                  config: widget.config,
+                  autoPlay: actualIndex == _currentIndex,
+                  onPlayingStateChanged: (isPlaying) {
+                    if (widget.config.hideArrowsWhenVideoPlays) {
+                      setState(() {
+                        _isVideoPlaying = isPlaying;
+                      });
+                    }
+                  },
+                ),
               );
             } else {
               return GestureDetector(

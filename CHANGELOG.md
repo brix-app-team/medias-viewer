@@ -5,6 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-10-09
+
+### Added
+- **YouTube Video Support**: Play YouTube videos directly in the media viewer
+  - New `MediaItem.youtubeUrl()` constructor for YouTube videos
+  - Automatic YouTube URL detection (supports youtube.com and youtu.be formats)
+  - Integrated YouTube player using `youtube_player_iframe` (Web/Desktop compatible)
+  - Full support for `autoPlayVideo`, `showVideoControls`, and `allowFullScreen` config options
+  - Seamless navigation between YouTube videos, regular videos, and images
+  - Auto-pause when swiping away from YouTube videos
+  - Navigation arrows automatically hide during YouTube video playback
+  - Compatible with all platforms: Android, iOS, Web, and Desktop
+  
+- **YouTube URL Detection**: 
+  - `MediaTypeDetector.isYouTubeUrl()` - Check if a URL is a YouTube URL
+  - `MediaTypeDetector.extractYouTubeVideoId()` - Extract video ID from YouTube URL
+  - `MediaItem.isYouTube` getter - Check if a media item is a YouTube video
+  - `MediaItem.youtubeVideoId` getter - Get the YouTube video ID
+  
+- **Supported YouTube URL formats**:
+  - `https://www.youtube.com/watch?v=VIDEO_ID`
+  - `https://youtube.com/watch?v=VIDEO_ID`
+  - `https://m.youtube.com/watch?v=VIDEO_ID`
+  - `https://youtu.be/VIDEO_ID`
+  - `youtube.com/watch?v=VIDEO_ID` (without protocol)
+
+### Enhanced
+- `MediaType` enum now includes `youtube` type
+- Auto-detection now recognizes YouTube URLs when using `MediaItem.url()`
+- `YouTubeViewerWidget` follows the same architecture as `VideoViewerWidget` for consistency
+- YouTube player respects SafeArea for better UX on devices with notches
+- Proper controller cleanup to prevent memory leaks
+
+### Dependencies
+- Added `youtube_player_iframe: ^5.2.1` - Modern YouTube player with Web/Desktop support
+
+### Example
+```dart
+MediaViewer(
+  items: [
+    MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+    MediaItem.imageUrl('https://example.com/photo.jpg'),
+    MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0'),
+  ],
+  config: MediaViewerConfig(
+    autoPlayVideo: true,
+    allowFullScreen: true,
+    showBackButton: true,
+    enableDismissOnSwipeDown: true,
+  ),
+  onDismissed: () => Navigator.pop(context),
+);
+```
+
+### Migration Guide
+If you're upgrading from v0.3.x:
+1. Run `flutter pub get` to install the new `youtube_player_iframe` dependency
+2. No breaking changes - all existing code will continue to work
+3. Optionally, add YouTube videos using `MediaItem.youtubeUrl()` or `MediaItem.url()` with auto-detection
+
 ## [0.3.4] 2025-10-06
 
 - Update readme

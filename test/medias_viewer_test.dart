@@ -285,6 +285,104 @@ void main() {
     test('enum values are correct', () {
       expect(MediaType.image.name, 'image');
       expect(MediaType.video.name, 'video');
+      expect(MediaType.youtube.name, 'youtube');
+    });
+  });
+
+  group('MediaItem YouTube Support', () {
+    test('youtubeUrl constructor creates correct MediaItem', () {
+      const item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
+
+      expect(item.type, MediaType.youtube);
+      expect(item.url, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+      expect(item.isYouTube, true);
+      expect(item.isVideo, false);
+      expect(item.isImage, false);
+    });
+
+    test('youtubeUrl constructor with short URL format', () {
+      const item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.url, 'https://youtu.be/dQw4w9WgXcQ');
+      expect(item.isYouTube, true);
+    });
+
+    test('youtubeVideoId getter extracts video ID from standard URL', () {
+      const item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
+
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+    });
+
+    test('youtubeVideoId getter extracts video ID from short URL', () {
+      const item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
+
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+    });
+
+    test('youtubeVideoId getter returns null for non-YouTube items', () {
+      const item = MediaItem.imageUrl('https://example.com/image.jpg');
+
+      expect(item.youtubeVideoId, null);
+    });
+
+    test('url constructor auto-detects YouTube URL (standard format)', () {
+      final item = MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.isYouTube, true);
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+    });
+
+    test('url constructor auto-detects YouTube URL (short format)', () {
+      final item = MediaItem.url('https://youtu.be/dQw4w9WgXcQ');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.isYouTube, true);
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+    });
+
+    test('url constructor auto-detects YouTube URL (mobile format)', () {
+      final item = MediaItem.url('https://m.youtube.com/watch?v=dQw4w9WgXcQ');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.isYouTube, true);
+    });
+
+    test('url constructor auto-detects YouTube URL without protocol', () {
+      final item = MediaItem.url('youtube.com/watch?v=dQw4w9WgXcQ');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.isYouTube, true);
+    });
+
+    test('isYouTube getter returns false for images', () {
+      const item = MediaItem.imageUrl('https://example.com/image.jpg');
+      expect(item.isYouTube, false);
+    });
+
+    test('isYouTube getter returns false for videos', () {
+      const item = MediaItem.videoUrl('https://example.com/video.mp4');
+      expect(item.isYouTube, false);
+    });
+
+    test('YouTube MediaItem equality works correctly', () {
+      const item1 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
+      const item2 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
+      const item3 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=other_id',
+      );
+
+      expect(item1, item2);
+      expect(item1 == item3, false);
     });
   });
 

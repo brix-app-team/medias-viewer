@@ -1,6 +1,6 @@
 name: medias_viewer
 description: A powerful and customizable Flutter media viewer for images and videos with zoom, swipe navigation, and video controls.
-version: 0.3.4
+version: 0.4.0
 homepage: https://github.com/brix-app-team/medias-viewer
 repository: https://github.com/brix-app-team/medias-viewer
 issue_tracker: https://github.com/brix-app-team/medias-viewer/issues
@@ -19,6 +19,8 @@ dependencies:
   # Video playback
   video_player: ^2.9.2
   chewie: ^1.8.5
+  
+  youtube_player_iframe: ^5.2.1
   
   # Utilities
   cached_network_image: ^3.4.1

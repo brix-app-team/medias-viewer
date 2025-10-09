@@ -5,4 +5,7 @@ enum MediaType {
 
   /// A video media type (mp4, mov, etc.)
   video,
+
+  /// A YouTube video media type
+  youtube,
 }

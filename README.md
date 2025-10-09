@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/medias_viewer.svg)](https://pub.dev/packages/medias_viewer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A powerful and customizable Flutter media viewer for images and videos with zoom, swipe navigation, and video controls.
+A powerful and customizable Flutter media viewer for images, videos and Youtube videos with zoom, swipe navigation, and video controls.
 <p align="center">
 <img src="https://github.com/brix-app-team/medias-viewer/blob/main/video.gif?raw=true"  width="40%" height="40%"/>
 </p>
@@ -26,6 +26,14 @@ A powerful and customizable Flutter media viewer for images and videos with zoom
 - SafeArea-aware controls (notch-friendly)
 - Smart navigation arrows (auto-hide during video playback)
 - Configurable back button positioning
+
+📺 **YouTube Support**
+- Play YouTube videos directly in the viewer
+- Auto-detection of YouTube URLs (youtube.com, youtu.be)
+- Integrated player without external browser
+- Full support for autoPlay, controls, and fullscreen
+- Compatible with Android, iOS, Web, and Desktop
+- Seamless navigation with other media types
 
 🎨 **Customization**
 - Custom background colors
@@ -63,7 +71,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  medias_viewer: ^0.1.0
+  medias_viewer: ^0.4.0
 ```
 
 Then run:
@@ -128,6 +136,7 @@ MediaViewer(
   items: [
     MediaItem.imageUrl('https://example.com/image1.jpg', tag: 'hero1'),
     MediaItem.videoUrl('https://example.com/video.mp4'),
+    MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
     MediaItem.imagePath('/path/to/local/image.jpg'),
     MediaItem.imageAsset('assets/images/photo.png'),
   ],
@@ -157,6 +166,33 @@ MediaViewer(
   ),
   onDismissed: () => Navigator.pop(context),
 );
+```
+
+### YouTube Video Example
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:medias_viewer/medias_viewer.dart';
+
+class YouTubeGallery extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MediaViewer(
+      items: [
+        MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+        MediaItem.imageUrl('https://example.com/photo.jpg'),
+        MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0'),
+      ],
+      config: MediaViewerConfig(
+        autoPlayVideo: true,
+        allowFullScreen: true,
+        showBackButton: true,
+        enableDismissOnSwipeDown: true,
+      ),
+      onDismissed: () => Navigator.pop(context),
+    );
+  }
+}
 ```
 
 ### New Features Examples
@@ -318,6 +354,28 @@ MediaItem.videoPath('/path/to/video.mp4')
 MediaItem.videoAsset('assets/videos/intro.mp4')
 ```
 
+#### YouTube Videos
+
+```dart
+// YouTube video from standard URL
+MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+
+// YouTube video from short URL
+MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ')
+
+// YouTube video with auto-detection
+MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+```
+
+**Supported YouTube URL formats:**
+- `https://www.youtube.com/watch?v=VIDEO_ID`
+- `https://youtube.com/watch?v=VIDEO_ID`
+- `https://m.youtube.com/watch?v=VIDEO_ID`
+- `https://youtu.be/VIDEO_ID`
+- `youtube.com/watch?v=VIDEO_ID` (without protocol)
+
+**Note:** Make sure to add `youtube_player_iframe` to your dependencies. The package is compatible with Android, iOS, Web, and Desktop platforms.
+
 ### Configuration Options
 
 | Property | Type | Default | Description |
@@ -410,6 +468,10 @@ Represents a media item (image or video).
 - `MediaItem.videoUrl(String url)`
 - `MediaItem.videoPath(String path)`
 - `MediaItem.videoAsset(String assetPath)`
+- `MediaItem.youtubeUrl(String url)` - **NEW in v0.4.0**
+- `MediaItem.url(String url, {String? tag})` - Auto-detection (includes YouTube support)
+- `MediaItem.path(String path, {String? tag})` - Auto-detection for local files
+- `MediaItem.asset(String assetPath, {String? tag})` - Auto-detection for assets
 
 ### MediaViewerConfig
 
@@ -441,10 +503,11 @@ Style configuration for the page indicator.
 
 ## Dependencies
 
-- `photo_view`: ^0.15.0
-- `video_player`: ^2.9.2
-- `chewie`: ^1.8.5
-- `cached_network_image`: ^3.4.1
+- `photo_view`: ^0.15.0 - Image zoom and pan
+- `video_player`: ^2.9.2 - Video playback
+- `chewie`: ^1.8.5 - Custom video player with controls
+- `youtube_player_iframe`: ^5.2.1 - YouTube video playback (Web/Desktop compatible)
+- `cached_network_image`: ^3.4.1 - Network image caching
 
 ## Contributing
 

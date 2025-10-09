@@ -27,13 +27,45 @@ class MediaTypeDetector {
     'wmv',
   };
 
+  /// Regular expressions for detecting YouTube URLs.
+  static final RegExp _youtubeRegex = RegExp(
+    r'^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)',
+    caseSensitive: false,
+  );
+
+  /// Checks if a URL is a YouTube URL.
+  ///
+  /// Supports formats:
+  /// - https://www.youtube.com/watch?v=VIDEO_ID
+  /// - https://youtube.com/watch?v=VIDEO_ID
+  /// - https://m.youtube.com/watch?v=VIDEO_ID
+  /// - https://youtu.be/VIDEO_ID
+  /// - youtube.com/watch?v=VIDEO_ID (without protocol)
+  static bool isYouTubeUrl(String url) {
+    return _youtubeRegex.hasMatch(url);
+  }
+
+  /// Extracts the YouTube video ID from a URL.
+  ///
+  /// Returns null if the URL is not a valid YouTube URL.
+  static String? extractYouTubeVideoId(String url) {
+    final match = _youtubeRegex.firstMatch(url);
+    return match?.group(1);
+  }
+
   /// Detects the media type from a URL or file path based on its extension.
   ///
+  /// Returns [MediaType.youtube] if the URL is a YouTube URL.
   /// Returns [MediaType.image] if the extension matches an image format.
   /// Returns [MediaType.video] if the extension matches a video format.
   ///
   /// Throws [UnsupportedError] if the extension is not recognized.
   static MediaType detectFromUrl(String url) {
+    // Check for YouTube URL first
+    if (isYouTubeUrl(url)) {
+      return MediaType.youtube;
+    }
+
     final extension = _getExtension(url);
 
     if (_imageExtensions.contains(extension)) {
@@ -48,7 +80,8 @@ class MediaTypeDetector {
       'Unable to detect media type from URL: $url\n'
       'Supported image extensions: ${_imageExtensions.join(', ')}\n'
       'Supported video extensions: ${_videoExtensions.join(', ')}\n'
-      'Please use MediaItem.imageUrl() or MediaItem.videoUrl() instead.',
+      'Supported video platforms: YouTube (youtube.com, youtu.be)\n'
+      'Please use MediaItem.imageUrl(), MediaItem.videoUrl(), or MediaItem.youtubeUrl() instead.',
     );
   }
 

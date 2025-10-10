@@ -20,7 +20,7 @@ dependencies:
   video_player: ^2.9.2
   chewie: ^1.8.5
   
-  youtube_player_flutter: 9.1.3
+  youtube_player_flutter: ^9.1.3
   
   # Utilities
   cached_network_image: ^3.4.1

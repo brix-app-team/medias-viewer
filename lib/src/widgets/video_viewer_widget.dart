@@ -50,6 +50,9 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
       if (widget.item.url != null) {
         _videoPlayerController = VideoPlayerController.networkUrl(
           Uri.parse(widget.item.url!),
+          formatHint: widget.item.url!.contains('.m3u8')
+              ? VideoFormat.hls
+              : null,
         );
       } else if (widget.item.path != null) {
         _videoPlayerController = VideoPlayerController.file(

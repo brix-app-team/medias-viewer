@@ -25,6 +25,8 @@ class MediaTypeDetector {
     'flv',
     'm4v',
     'wmv',
+    'm3u8',
+    'ts',
   };
 
   /// Regular expressions for detecting YouTube URLs.

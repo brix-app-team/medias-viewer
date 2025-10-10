@@ -93,7 +93,7 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
 
   void _onPlayerStateChanged() {
     if (_controller == null) return;
-    
+
     final isCurrentlyPlaying = _controller!.value.isPlaying;
     if (_isPlaying != isCurrentlyPlaying) {
       setState(() {

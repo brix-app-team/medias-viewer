@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../models/media_item.dart';
 import '../models/media_viewer_config.dart';
 import '../utils/media_type_detector.dart';
@@ -58,31 +58,24 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
       }
 
       // Create YouTube player controller
-      _controller = YoutubePlayerController.fromVideoId(
-        videoId: videoId,
-        autoPlay: widget.autoPlay || widget.config.autoPlayVideo,
-        params: YoutubePlayerParams(
-          showControls: widget.config.showVideoControls,
-          showFullscreenButton: widget.config.allowFullScreen,
+      _controller = YoutubePlayerController(
+        initialVideoId: videoId,
+        flags: YoutubePlayerFlags(
+          autoPlay: widget.autoPlay || widget.config.autoPlayVideo,
           mute: false,
           loop: false,
           enableCaption: true,
-          strictRelatedVideos: true,
-          // Color and UI customization
-          color: 'white',
+          hideControls: !widget.config.showVideoControls,
+          controlsVisibleAtStart: widget.config.showVideoControls,
+          disableDragSeek: false,
+          isLive: false,
+          forceHD: false,
+          hideThumbnail: false,
         ),
       );
 
       // Listen to player state changes
-      _controller!.listen((event) {
-        final isCurrentlyPlaying = event.playerState == PlayerState.playing;
-        if (_isPlaying != isCurrentlyPlaying) {
-          setState(() {
-            _isPlaying = isCurrentlyPlaying;
-          });
-          widget.onPlayingStateChanged?.call(isCurrentlyPlaying);
-        }
-      });
+      _controller!.addListener(_onPlayerStateChanged);
 
       if (mounted) {
         setState(() {
@@ -98,20 +91,33 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
     }
   }
 
+  void _onPlayerStateChanged() {
+    if (_controller == null) return;
+    
+    final isCurrentlyPlaying = _controller!.value.isPlaying;
+    if (_isPlaying != isCurrentlyPlaying) {
+      setState(() {
+        _isPlaying = isCurrentlyPlaying;
+      });
+      widget.onPlayingStateChanged?.call(isCurrentlyPlaying);
+    }
+  }
+
   @override
   void dispose() {
-    _controller?.close();
+    _controller?.removeListener(_onPlayerStateChanged);
+    _controller?.dispose();
     super.dispose();
   }
 
   /// Pauses the video if it's playing.
   void pause() {
-    _controller?.pauseVideo();
+    _controller?.pause();
   }
 
   /// Plays the video if it's paused.
   void play() {
-    _controller?.playVideo();
+    _controller?.play();
   }
 
   /// Returns true if the video is currently playing.
@@ -159,8 +165,18 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
         child: Center(
           child: YoutubePlayer(
             controller: _controller!,
-            aspectRatio: 16 / 9,
-            backgroundColor: Colors.black,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.red,
+            progressColors: const ProgressBarColors(
+              playedColor: Colors.red,
+              handleColor: Colors.redAccent,
+            ),
+            onReady: () {
+              // Video is ready to play
+            },
+            onEnded: (metadata) {
+              // Video has ended
+            },
           ),
         ),
       ),

@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-10-10
+
+### Changed
+- **BREAKING CHANGE**: Replaced `youtube_player_iframe` with `youtube_player_flutter` version 9.1.3
+  - Better mobile compatibility (Android & iOS)
+  - Simpler integration and more fluid user experience
+  - Improved fullscreen handling and video controls
+  - Optimized for mobile platforms with native performance
+  
+### Technical Changes
+- Updated `YouTubeViewerWidget` to use `youtube_player_flutter` API
+  - Controller initialization simplified with `YoutubePlayerController`
+  - Flags-based configuration for better control
+  - Direct listener pattern for state changes
+  - Improved dispose lifecycle management
+  
+### Migration Guide
+If you're upgrading from v0.4.x:
+1. Run `flutter pub get` to install the new `youtube_player_flutter` dependency
+2. Remove any platform-specific web configurations if you had them for `youtube_player_iframe`
+3. All existing YouTube functionality remains the same from a user perspective
+4. Note: Web and Desktop platform support for YouTube is no longer available (mobile-focused)
+
+### Dependencies
+- Removed `youtube_player_iframe: ^5.2.1`
+- Added `youtube_player_flutter: 9.1.3` - Optimized YouTube player for mobile platforms
+
 ## [0.4.2] - 2025-10-10
 
 ### Enhanced
@@ -21,12 +48,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **YouTube Video Support**: Play YouTube videos directly in the media viewer
   - New `MediaItem.youtubeUrl()` constructor for YouTube videos
   - Automatic YouTube URL detection (supports youtube.com and youtu.be formats)
-  - Integrated YouTube player using `youtube_player_iframe` (Web/Desktop compatible)
+  - Integrated YouTube player using `youtube_player_flutter` (optimized for mobile)
   - Full support for `autoPlayVideo`, `showVideoControls`, and `allowFullScreen` config options
   - Seamless navigation between YouTube videos, regular videos, and images
   - Auto-pause when swiping away from YouTube videos
   - Navigation arrows automatically hide during YouTube video playback
-  - Compatible with all platforms: Android, iOS, Web, and Desktop
+  - Compatible with Android and iOS platforms with excellent performance
   
 - **YouTube URL Detection**: 
   - `MediaTypeDetector.isYouTubeUrl()` - Check if a URL is a YouTube URL
@@ -49,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proper controller cleanup to prevent memory leaks
 
 ### Dependencies
-- Added `youtube_player_iframe: ^5.2.1` - Modern YouTube player with Web/Desktop support
+- Added `youtube_player_flutter: 9.1.3` - Modern YouTube player optimized for mobile
 
 ### Example
 ```dart
@@ -71,9 +98,10 @@ MediaViewer(
 
 ### Migration Guide
 If you're upgrading from v0.3.x:
-1. Run `flutter pub get` to install the new `youtube_player_iframe` dependency
+1. Run `flutter pub get` to install the new `youtube_player_flutter` dependency
 2. No breaking changes - all existing code will continue to work
 3. Optionally, add YouTube videos using `MediaItem.youtubeUrl()` or `MediaItem.url()` with auto-detection
+4. Note: YouTube support is now optimized for mobile (Android & iOS) platforms
 
 ## [0.3.4] 2025-10-06
 

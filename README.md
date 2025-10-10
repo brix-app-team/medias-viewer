@@ -32,8 +32,9 @@ A powerful and customizable Flutter media viewer for images, videos and Youtube 
 - Auto-detection of YouTube URLs (youtube.com, youtu.be)
 - Integrated player without external browser
 - Full support for autoPlay, controls, and fullscreen
-- Compatible with Android, iOS, Web, and Desktop
+- Optimized for Android and iOS with excellent mobile performance
 - Seamless navigation with other media types
+- Simple and fluid integration with better mobile compatibility
 
 🎨 **Customization**
 - Custom background colors
@@ -374,7 +375,7 @@ MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 - `https://youtu.be/VIDEO_ID`
 - `youtube.com/watch?v=VIDEO_ID` (without protocol)
 
-**Note:** Make sure to add `youtube_player_iframe` to your dependencies. The package is compatible with Android, iOS, Web, and Desktop platforms.
+**Note:** Make sure to add `youtube_player_flutter` to your dependencies. The package is compatible with Android and iOS platforms, with excellent mobile performance.
 
 ### Configuration Options
 
@@ -506,7 +507,7 @@ Style configuration for the page indicator.
 - `photo_view`: ^0.15.0 - Image zoom and pan
 - `video_player`: ^2.9.2 - Video playback
 - `chewie`: ^1.8.5 - Custom video player with controls
-- `youtube_player_iframe`: ^5.2.1 - YouTube video playback (Web/Desktop compatible)
+- `youtube_player_flutter`: 9.1.3 - YouTube video playback (optimized for mobile)
 - `cached_network_image`: ^3.4.1 - Network image caching
 
 ## Contributing

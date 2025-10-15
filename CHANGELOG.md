@@ -5,46 +5,82 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] - 2025-10-15
+
+### Added
+
+- **YouTube Start Time Support**: Videos can now start at a specific time using the `t=` URL parameter
+  - Automatic extraction of start time from YouTube URLs (standard and short formats)
+  - New `youtubeStartTime` property in `MediaItem` to store start time in seconds
+  - New `extractYouTubeStartTime()` method in `MediaTypeDetector` utility
+  - `YouTubeViewerWidget` now uses the `startAt` flag to begin playback at specified time
+  - Support for both formats: `?v=VIDEO_ID&t=90` and `?t=30`
+
+### Enhanced
+
+- `MediaItem.youtubeUrl()` factory constructor now automatically extracts start time from URL
+- `MediaItem.url()` factory constructor extracts start time for YouTube URLs
+- Updated documentation with examples of start time usage
+- Added comprehensive unit tests for start time extraction and functionality
+
+### Examples
+
+```dart
+// Start at 90 seconds (1min30s)
+MediaItem.youtubeUrl('https://www.youtube.com/watch?v=VIDEO_ID&t=90')
+
+// Start at 30 seconds (short URL)
+MediaItem.youtubeUrl('https://youtu.be/VIDEO_ID?t=30')
+```
+
 ## [0.5.0] - 2025-10-10
 
 ### Changed
+
 - **BREAKING CHANGE**: Replaced `youtube_player_iframe` with `youtube_player_flutter` version 9.1.3
   - Better mobile compatibility (Android & iOS)
   - Simpler integration and more fluid user experience
   - Improved fullscreen handling and video controls
   - Optimized for mobile platforms with native performance
-  
+
 ### Technical Changes
+
 - Updated `YouTubeViewerWidget` to use `youtube_player_flutter` API
   - Controller initialization simplified with `YoutubePlayerController`
   - Flags-based configuration for better control
   - Direct listener pattern for state changes
   - Improved dispose lifecycle management
-  
+
 ### Migration Guide
+
 If you're upgrading from v0.4.x:
+
 1. Run `flutter pub get` to install the new `youtube_player_flutter` dependency
 2. Remove any platform-specific web configurations if you had them for `youtube_player_iframe`
 3. All existing YouTube functionality remains the same from a user perspective
 4. Note: Web and Desktop platform support for YouTube is no longer available (mobile-focused)
 
 ### Dependencies
+
 - Removed `youtube_player_iframe: ^5.2.1`
 - Added `youtube_player_flutter: 9.1.3` - Optimized YouTube player for mobile platforms
 
 ## [0.4.2] - 2025-10-10
 
 ### Enhanced
+
 - add formatHint HLS when video is an m3u8
 
 ## [0.4.1] - 2025-10-10
 
 ### Enhanced
+
 - `MediaTypeDetector` now detect `m3u8` and `ts` extensions for videos
 
 ## [0.4.0] - 2025-10-09
 
 ### Added
+
 - **YouTube Video Support**: Play YouTube videos directly in the media viewer
   - New `MediaItem.youtubeUrl()` constructor for YouTube videos
   - Automatic YouTube URL detection (supports youtube.com and youtu.be formats)
@@ -54,13 +90,11 @@ If you're upgrading from v0.4.x:
   - Auto-pause when swiping away from YouTube videos
   - Navigation arrows automatically hide during YouTube video playback
   - Compatible with Android and iOS platforms with excellent performance
-  
-- **YouTube URL Detection**: 
+- **YouTube URL Detection**:
   - `MediaTypeDetector.isYouTubeUrl()` - Check if a URL is a YouTube URL
   - `MediaTypeDetector.extractYouTubeVideoId()` - Extract video ID from YouTube URL
   - `MediaItem.isYouTube` getter - Check if a media item is a YouTube video
   - `MediaItem.youtubeVideoId` getter - Get the YouTube video ID
-  
 - **Supported YouTube URL formats**:
   - `https://www.youtube.com/watch?v=VIDEO_ID`
   - `https://youtube.com/watch?v=VIDEO_ID`
@@ -69,6 +103,7 @@ If you're upgrading from v0.4.x:
   - `youtube.com/watch?v=VIDEO_ID` (without protocol)
 
 ### Enhanced
+
 - `MediaType` enum now includes `youtube` type
 - Auto-detection now recognizes YouTube URLs when using `MediaItem.url()`
 - `YouTubeViewerWidget` follows the same architecture as `VideoViewerWidget` for consistency
@@ -76,9 +111,11 @@ If you're upgrading from v0.4.x:
 - Proper controller cleanup to prevent memory leaks
 
 ### Dependencies
+
 - Added `youtube_player_flutter: 9.1.3` - Modern YouTube player optimized for mobile
 
 ### Example
+
 ```dart
 MediaViewer(
   items: [
@@ -97,7 +134,9 @@ MediaViewer(
 ```
 
 ### Migration Guide
+
 If you're upgrading from v0.3.x:
+
 1. Run `flutter pub get` to install the new `youtube_player_flutter` dependency
 2. No breaking changes - all existing code will continue to work
 3. Optionally, add YouTube videos using `MediaItem.youtubeUrl()` or `MediaItem.url()` with auto-detection
@@ -118,32 +157,36 @@ If you're upgrading from v0.3.x:
 ## [0.3.1] - 2025-10-03
 
 ### Added
+
 - **Video UX Optimizations**: Enhanced video playback experience with smart UI controls
   - `hideArrowsWhenVideoPlays` config option (default: true) - Navigation arrows automatically fade out during video playback and fade back in when paused
   - `backButtonPadding` config option (default: EdgeInsets.only(top: 16, left: 8)) - Configurable back button positioning to prevent overlap with Chewie's fullscreen button
   - SafeArea wrapper for video controls - Ensures video controls respect device notches and safe areas on all devices
 
 ### Enhanced
+
 - **Smooth animations**: Navigation arrows now use AnimatedOpacity with 300ms fade transitions for better UX
 - **Video state tracking**: Implemented callback system to track video playing/paused state
 - **Better ergonomics**: Back button position now customizable to avoid UI element conflicts
 
 ### Technical
+
 - Video playing state propagates from VideoPlayerController → VideoViewerWidget → MediaViewer
 - AnimatedOpacity with IgnorePointer ensures arrows don't interfere with touch events when hidden
 - Proper video state listener cleanup in dispose() method
 
 ### Example
+
 ```dart
 MediaViewer(
   items: [MediaItem.videoUrl('https://example.com/video.mp4')],
   config: MediaViewerConfig(
     // Arrows automatically hide during video playback
     hideArrowsWhenVideoPlays: true,
-    
+
     // Custom back button position to avoid overlap
     backButtonPadding: EdgeInsets.only(top: 20, left: 12),
-    
+
     // Video controls respect SafeArea automatically
     showVideoControls: true,
   ),
@@ -153,6 +196,7 @@ MediaViewer(
 ## [0.3.0] - 2025-10-03
 
 ### Added
+
 - **Automatic media type detection**: New feature to automatically detect whether a media item is an image or video based on file extension
   - New constructors: `MediaItem.url()`, `MediaItem.path()`, `MediaItem.asset()`
   - Simplifies API usage - no need to specify `.imageUrl()` or `.videoUrl()` anymore
@@ -164,12 +208,14 @@ MediaViewer(
   - Handles URLs with query parameters and fragments
 
 ### Technical
+
 - New `MediaTypeDetector` utility class for extension-based detection
 - Comprehensive unit tests for auto-detection (25+ test cases)
 - Updated documentation with auto-detection examples and supported formats
 - Future-proof design for HTTP Content-Type detection
 
 ### Example
+
 ```dart
 // Before (explicit type specification)
 MediaItem.imageUrl('https://example.com/photo.jpg')
@@ -183,6 +229,7 @@ MediaItem.url('https://example.com/video.mp4')  // Detected as video
 ## [0.2.0] - 2025-10-03
 
 ### Added
+
 - **Navigation arrows**: Optional left/right arrows for manual navigation between media items
   - Configurable position (center, top, bottom)
   - Customizable color and size
@@ -197,11 +244,13 @@ MediaItem.url('https://example.com/video.mp4')  // Detected as video
 - **Swipe threshold configuration**: `swipeToPageThreshold` to control horizontal swipe sensitivity
 
 ### Fixed
+
 - **Improved swipe detection**: Better distinction between horizontal page swipes and image pan gestures
 - **Smooth transitions**: Eliminated visual glitches when swiping between zoomed images
 - **Image caching**: Better preloading for smoother transitions
 
 ### Enhanced
+
 - Example app now includes 10 different demos showcasing all features
 - Updated tests to cover new functionality (12 tests passing)
 - Improved documentation with detailed examples
@@ -209,6 +258,7 @@ MediaItem.url('https://example.com/video.mp4')  // Detected as video
 ## [0.1.0] - 2025-10-03
 
 ### Added
+
 - Initial release of medias_viewer package
 - Image viewer with zoom capabilities (pinch-to-zoom and double-tap)
 - Video viewer with playback controls using Chewie
@@ -228,27 +278,25 @@ MediaItem.url('https://example.com/video.mp4')  // Detected as video
 - Multi-platform support (Android, iOS, Web, Desktop)
 
 ### Features
-- **Image Support**: 
+
+- **Image Support**:
   - Zoom with pinch and double-tap gestures
   - Pan zoomed images
   - Network, file, and asset sources
   - Hero animations
-  
-- **Video Support**: 
+- **Video Support**:
   - Auto-pause when swiping away
   - Playback controls (play, pause, seek)
   - Fullscreen mode
   - Network, file, and asset sources
-  
-- **Customization**: 
+- **Customization**:
   - Background colors
   - Indicator position (6 positions available)
   - Custom indicator styles
   - Enable/disable zoom
   - Enable/disable loop
   - Auto-play videos
-  
-- **Performance**: 
+- **Performance**:
   - Efficient memory management
   - Proper video controller disposal
   - Network image caching

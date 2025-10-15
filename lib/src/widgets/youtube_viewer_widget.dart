@@ -57,6 +57,13 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
         return;
       }
 
+      // Extract start time from URL or use the one provided in MediaItem
+      final startTime =
+          widget.item.youtubeStartTime ??
+          (widget.item.url != null
+              ? MediaTypeDetector.extractYouTubeStartTime(widget.item.url!)
+              : null);
+
       // Create YouTube player controller
       _controller = YoutubePlayerController(
         initialVideoId: videoId,
@@ -71,6 +78,7 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
           isLive: false,
           forceHD: false,
           hideThumbnail: false,
+          startAt: startTime ?? 0,
         ),
       );
 

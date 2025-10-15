@@ -55,6 +55,25 @@ class MediaTypeDetector {
     return match?.group(1);
   }
 
+  /// Extracts the start time parameter (t=) from a YouTube URL.
+  ///
+  /// The parameter can be in seconds (e.g., t=90 for 1min30s).
+  /// Returns null if no time parameter is found.
+  ///
+  /// Examples:
+  /// - https://www.youtube.com/watch?v=VIDEO_ID&t=90 -> 90
+  /// - https://youtu.be/VIDEO_ID?t=120 -> 120
+  static int? extractYouTubeStartTime(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null) return null;
+
+    final timeParam = uri.queryParameters['t'];
+    if (timeParam == null) return null;
+
+    // Try to parse as integer (seconds)
+    return int.tryParse(timeParam);
+  }
+
   /// Detects the media type from a URL or file path based on its extension.
   ///
   /// Returns [MediaType.youtube] if the URL is a YouTube URL.

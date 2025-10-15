@@ -291,7 +291,7 @@ void main() {
 
   group('MediaItem YouTube Support', () {
     test('youtubeUrl constructor creates correct MediaItem', () {
-      const item = MediaItem.youtubeUrl(
+      final item = MediaItem.youtubeUrl(
         'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       );
 
@@ -303,7 +303,7 @@ void main() {
     });
 
     test('youtubeUrl constructor with short URL format', () {
-      const item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
+      final item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
 
       expect(item.type, MediaType.youtube);
       expect(item.url, 'https://youtu.be/dQw4w9WgXcQ');
@@ -311,7 +311,7 @@ void main() {
     });
 
     test('youtubeVideoId getter extracts video ID from standard URL', () {
-      const item = MediaItem.youtubeUrl(
+      final item = MediaItem.youtubeUrl(
         'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       );
 
@@ -319,7 +319,7 @@ void main() {
     });
 
     test('youtubeVideoId getter extracts video ID from short URL', () {
-      const item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
+      final item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ');
 
       expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
     });
@@ -371,18 +371,105 @@ void main() {
     });
 
     test('YouTube MediaItem equality works correctly', () {
-      const item1 = MediaItem.youtubeUrl(
+      final item1 = MediaItem.youtubeUrl(
         'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       );
-      const item2 = MediaItem.youtubeUrl(
+      final item2 = MediaItem.youtubeUrl(
         'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       );
-      const item3 = MediaItem.youtubeUrl(
+      final item3 = MediaItem.youtubeUrl(
         'https://www.youtube.com/watch?v=other_id',
       );
 
       expect(item1, item2);
       expect(item1 == item3, false);
+    });
+  });
+
+  group('YouTube Start Time Support', () {
+    test('extracts start time from standard YouTube URL', () {
+      final item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90',
+      );
+
+      expect(item.type, MediaType.youtube);
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, 90);
+    });
+
+    test('extracts start time from short YouTube URL', () {
+      final item = MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ?t=120');
+
+      expect(item.type, MediaType.youtube);
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, 120);
+    });
+
+    test('returns null start time when parameter is not present', () {
+      final item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
+
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, null);
+    });
+
+    test('extracts start time with url constructor', () {
+      final item = MediaItem.url(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=60',
+      );
+
+      expect(item.type, MediaType.youtube);
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, 60);
+    });
+
+    test('handles zero start time', () {
+      final item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0',
+      );
+
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, 0);
+    });
+
+    test('handles large start time values', () {
+      final item = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=3600',
+      );
+
+      expect(item.youtubeVideoId, 'dQw4w9WgXcQ');
+      expect(item.youtubeStartTime, 3600); // 1 hour
+    });
+
+    test('non-YouTube items have null start time', () {
+      const imageItem = MediaItem.imageUrl('https://example.com/image.jpg');
+      const videoItem = MediaItem.videoUrl('https://example.com/video.mp4');
+
+      expect(imageItem.youtubeStartTime, null);
+      expect(videoItem.youtubeStartTime, null);
+    });
+
+    test('YouTube items with different start times are not equal', () {
+      final item1 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90',
+      );
+      final item2 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=120',
+      );
+
+      expect(item1 == item2, false);
+    });
+
+    test('YouTube items with same start time are equal', () {
+      final item1 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90',
+      );
+      final item2 = MediaItem.youtubeUrl(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90',
+      );
+
+      expect(item1, item2);
     });
   });
 

@@ -397,16 +397,18 @@ class ExampleHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => MediaViewer(
           items: [
-            // YouTube videos
-            const MediaItem.youtubeUrl(
-              'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            ),
+            // YouTube video starting from the beginning
+            MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
             // Mix with images
             const MediaItem.imageUrl(
               'https://picsum.photos/800/600?random=100',
             ),
-            // Another YouTube video (short URL format)
-            const MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0'),
+            // YouTube video with start time at 90 seconds (1min30s)
+            MediaItem.youtubeUrl(
+              'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90',
+            ),
+            // Another YouTube video (short URL format with start time)
+            MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0?t=30'),
             // Regular video
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',

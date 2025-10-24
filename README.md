@@ -11,6 +11,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 ## Features
 
 ✨ **Image Support**
+
 - Zoom with pinch-to-zoom and double-tap
 - Pan and navigate zoomed images
 - Support for network, local files, and assets
@@ -18,6 +19,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Hero animations
 
 🎬 **Video Support**
+
 - Auto-pause when swiping away
 - Full playback controls (play, pause, seek)
 - Fullscreen support
@@ -28,6 +30,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Configurable back button positioning
 
 📺 **YouTube Support**
+
 - Play YouTube videos directly in the viewer
 - Auto-detection of YouTube URLs (youtube.com, youtu.be)
 - Integrated player without external browser
@@ -45,6 +48,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Simple integration with mobile-optimized playback
 
 🎨 **Customization**
+
 - Custom background colors
 - Configurable page indicator (position, style, colors)
 - Navigation arrows (left/right) with customizable position
@@ -56,6 +60,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Swipe down to dismiss
 
 ⚡ **Performance**
+
 - Optimized memory management
 - Efficient video controller disposal
 - Smooth page transitions
@@ -63,6 +68,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Improved swipe detection (horizontal vs vertical)
 
 🎯 **User Experience**
+
 - SafeArea support for all controls (notch-friendly)
 - Swipe down gesture to close viewer
 - Optional navigation arrows for manual control
@@ -70,6 +76,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - Smooth transitions between zoomed images
 
 📱 **Platform Support**
+
 - ✅ Android
 - ✅ iOS
 - ✅ Desktop (macOS)
@@ -247,10 +254,10 @@ MediaViewer(
   config: MediaViewerConfig(
     // Automatically hide navigation arrows when video is playing
     hideArrowsWhenVideoPlays: true,  // Default: true
-    
+
     // Adjust back button position to avoid overlap with fullscreen button
     backButtonPadding: EdgeInsets.only(top: 16, left: 8),  // Default
-    
+
     // Video controls automatically respect SafeArea (notch-friendly)
     showVideoControls: true,
   ),
@@ -258,6 +265,7 @@ MediaViewer(
 ```
 
 **What's improved:**
+
 - ✅ Video controls respect device SafeArea (no more controls hidden behind notches)
 - ✅ Navigation arrows automatically fade out during video playback for unobstructed viewing
 - ✅ Back button position is configurable to prevent overlap with Chewie's fullscreen button
@@ -312,10 +320,10 @@ MediaViewer(
     showNavigationArrows: true,
     navigationArrowsPosition: NavigationArrowsPosition.centerVertical,
     showBackButton: true,
-    
+
     // Dismiss gesture
     enableDismissOnSwipeDown: true,
-    
+
     // Indicator
     showIndicator: true,
     indicatorPosition: IndicatorPosition.topCenter,
@@ -323,7 +331,7 @@ MediaViewer(
       backgroundColor: Colors.black54,
       borderRadius: 16,
     ),
-    
+
     // Behavior
     autoPlayVideo: true,
     enableLoop: false,
@@ -353,6 +361,7 @@ MediaItem.asset('assets/videos/intro.mp4')          // Detected as video
 ```
 
 **Supported Extensions:**
+
 - **Images:** jpg, jpeg, png, gif, webp, bmp, svg
 - **Videos:** mp4, mov, avi, mkv, webm, flv, m4v, wmv
 
@@ -402,9 +411,16 @@ MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ')
 
 // YouTube video with auto-detection
 MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+
+// YouTube video starting at a specific time (90 seconds = 1min30s)
+MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90')
+
+// Short URL with start time (30 seconds)
+MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ?t=30')
 ```
 
 **Supported YouTube URL formats:**
+
 - `https://www.youtube.com/watch?v=VIDEO_ID`
 - `https://youtube.com/watch?v=VIDEO_ID`
 - `https://m.youtube.com/watch?v=VIDEO_ID`
@@ -436,34 +452,34 @@ MediaItem.url('https://vimeo.com/76979871')
 
 ### Configuration Options
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `backgroundColor` | `Color` | `Colors.black` | Background color of the viewer |
-| `showIndicator` | `bool` | `true` | Show page indicator (e.g., "1 of 5") |
-| `indicatorPosition` | `IndicatorPosition` | `topCenter` | Position of the indicator |
-| `indicatorStyle` | `IndicatorStyle?` | `null` | Custom style for the indicator |
-| `enableLoop` | `bool` | `false` | Enable infinite loop navigation |
-| `enableImageZoom` | `bool` | `true` | Enable zoom for images |
-| `enableDoubleTapZoom` | `bool` | `true` | Enable double-tap to zoom |
-| `minScale` | `double` | `1.0` | Minimum zoom scale |
-| `maxScale` | `double` | `3.0` | Maximum zoom scale |
-| `autoPlayVideo` | `bool` | `false` | Auto-play videos when displayed |
-| `showVideoControls` | `bool` | `true` | Show video playback controls |
-| `allowFullScreen` | `bool` | `true` | Allow fullscreen video |
-| `pageSnapping` | `bool` | `true` | Enable page snapping |
-| `onPageChanged` | `Function(int)?` | `null` | Callback when page changes |
-| `showNavigationArrows` | `bool` | `false` | Show left/right navigation arrows |
-| `navigationArrowsPosition` | `NavigationArrowsPosition` | `centerVertical` | Position of navigation arrows |
-| `arrowsColor` | `Color` | `Colors.white` | Color of navigation arrows |
-| `arrowsSize` | `double` | `40` | Size of navigation arrows |
-| `showBackButton` | `bool` | `false` | Show back/close button |
-| `backButtonColor` | `Color` | `Colors.white` | Color of back button |
-| `backButtonPadding` | `EdgeInsets` | `EdgeInsets.only(top: 16, left: 8)` | Padding for back button positioning |
-| `enableDismissOnSwipeDown` | `bool` | `false` | Enable swipe down to dismiss |
-| `swipeToPageThreshold` | `double` | `0.6` | Swipe sensitivity (0.0 to 1.0) |
-| `enableAutoDetectMediaType` | `bool` | `false` | Enable automatic media type detection from file extensions |
-| `hideArrowsWhenVideoPlays` | `bool` | `true` | Automatically hide navigation arrows during video playback |
-| `enableAutoDetectMediaType` | `bool` | `true` | Automatically detect the media type |
+| Property                    | Type                       | Default                             | Description                                                |
+| --------------------------- | -------------------------- | ----------------------------------- | ---------------------------------------------------------- |
+| `backgroundColor`           | `Color`                    | `Colors.black`                      | Background color of the viewer                             |
+| `showIndicator`             | `bool`                     | `true`                              | Show page indicator (e.g., "1 of 5")                       |
+| `indicatorPosition`         | `IndicatorPosition`        | `topCenter`                         | Position of the indicator                                  |
+| `indicatorStyle`            | `IndicatorStyle?`          | `null`                              | Custom style for the indicator                             |
+| `enableLoop`                | `bool`                     | `false`                             | Enable infinite loop navigation                            |
+| `enableImageZoom`           | `bool`                     | `true`                              | Enable zoom for images                                     |
+| `enableDoubleTapZoom`       | `bool`                     | `true`                              | Enable double-tap to zoom                                  |
+| `minScale`                  | `double`                   | `1.0`                               | Minimum zoom scale                                         |
+| `maxScale`                  | `double`                   | `3.0`                               | Maximum zoom scale                                         |
+| `autoPlayVideo`             | `bool`                     | `false`                             | Auto-play videos when displayed                            |
+| `showVideoControls`         | `bool`                     | `true`                              | Show video playback controls                               |
+| `allowFullScreen`           | `bool`                     | `true`                              | Allow fullscreen video                                     |
+| `pageSnapping`              | `bool`                     | `true`                              | Enable page snapping                                       |
+| `onPageChanged`             | `Function(int)?`           | `null`                              | Callback when page changes                                 |
+| `showNavigationArrows`      | `bool`                     | `false`                             | Show left/right navigation arrows                          |
+| `navigationArrowsPosition`  | `NavigationArrowsPosition` | `centerVertical`                    | Position of navigation arrows                              |
+| `arrowsColor`               | `Color`                    | `Colors.white`                      | Color of navigation arrows                                 |
+| `arrowsSize`                | `double`                   | `40`                                | Size of navigation arrows                                  |
+| `showBackButton`            | `bool`                     | `false`                             | Show back/close button                                     |
+| `backButtonColor`           | `Color`                    | `Colors.white`                      | Color of back button                                       |
+| `backButtonPadding`         | `EdgeInsets`               | `EdgeInsets.only(top: 16, left: 8)` | Padding for back button positioning                        |
+| `enableDismissOnSwipeDown`  | `bool`                     | `false`                             | Enable swipe down to dismiss                               |
+| `swipeToPageThreshold`      | `double`                   | `0.6`                               | Swipe sensitivity (0.0 to 1.0)                             |
+| `enableAutoDetectMediaType` | `bool`                     | `false`                             | Enable automatic media type detection from file extensions |
+| `hideArrowsWhenVideoPlays`  | `bool`                     | `true`                              | Automatically hide navigation arrows during video playback |
+| `enableAutoDetectMediaType` | `bool`                     | `true`                              | Automatically detect the media type                        |
 
 ### Indicator Positions
 
@@ -510,6 +526,7 @@ flutter run
 The main widget for displaying media.
 
 **Constructor Parameters:**
+
 - `items` (required): List of `MediaItem` objects to display
 - `initialIndex`: Starting index (default: 0)
 - `config`: Configuration object for customization
@@ -520,6 +537,7 @@ The main widget for displaying media.
 Represents a media item (image or video).
 
 **Constructors:**
+
 - `MediaItem.imageUrl(String url, {String? tag})`
 - `MediaItem.imagePath(String path, {String? tag})`
 - `MediaItem.imageAsset(String assetPath, {String? tag})`
@@ -542,6 +560,7 @@ See the Configuration Options table above for all available properties.
 Style configuration for the page indicator.
 
 **Properties:**
+
 - `textStyle`: Text style for the indicator
 - `padding`: Padding around the indicator
 - `backgroundColor`: Optional background color
@@ -599,4 +618,3 @@ See [CHANGELOG.md](CHANGELOG.md) for a list of changes in each version.
 - Uses [photo_view](https://pub.dev/packages/photo_view) for image zoom
 - Uses [video_player](https://pub.dev/packages/video_player) and [chewie](https://pub.dev/packages/chewie) for video playback
 - Uses [cached_network_image](https://pub.dev/packages/cached_network_image) for efficient image caching
-

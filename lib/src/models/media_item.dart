@@ -10,12 +10,14 @@ class MediaItem {
   /// The [path] is an optional local file path (for local media).
   /// The [assetPath] is an optional asset path (for bundled media).
   /// The [tag] is an optional hero animation tag.
+  /// The [youtubeStartTime] is the start time in seconds for YouTube videos.
   const MediaItem({
     required this.type,
     this.url,
     this.path,
     this.assetPath,
     this.tag,
+    this.youtubeStartTime,
   }) : assert(
          url != null || path != null || assetPath != null,
          'At least one of url, path, or assetPath must be provided',
@@ -53,13 +55,24 @@ class MediaItem {
   /// - https://youtu.be/VIDEO_ID
   /// - youtube.com/watch?v=VIDEO_ID (without protocol)
   ///
+  /// The start time parameter (t=) will be automatically extracted from the URL
+  /// if present. For example:
+  /// - https://www.youtube.com/watch?v=VIDEO_ID&t=90 (starts at 1min30s)
+  ///
   /// Example:
   /// ```dart
   /// MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
   /// MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ')
+  /// MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=90')
   /// ```
-  const MediaItem.youtubeUrl(String url)
-    : this(type: MediaType.youtube, url: url);
+  factory MediaItem.youtubeUrl(String url) {
+    final startTime = MediaTypeDetector.extractYouTubeStartTime(url);
+    return MediaItem(
+      type: MediaType.youtube,
+      url: url,
+      youtubeStartTime: startTime,
+    );
+  }
 
   /// Creates a Vimeo video media item from a Vimeo URL.
   ///
@@ -84,6 +97,9 @@ class MediaItem {
   /// Supported image extensions: jpg, jpeg, png, gif, webp, bmp, svg
   /// Supported video extensions: mp4, mov, avi, mkv, webm, flv, m4v, wmv
   ///
+  /// For YouTube URLs, the start time parameter (t=) will be automatically
+  /// extracted if present.
+  ///
   /// Throws [UnsupportedError] if:
   /// - The file extension is not recognized
   ///
@@ -91,11 +107,22 @@ class MediaItem {
   /// ```dart
   /// MediaItem.url('https://example.com/photo.jpg')  // Detected as image
   /// MediaItem.url('https://example.com/video.mp4')  // Detected as video
+  /// MediaItem.url('https://www.youtube.com/watch?v=VIDEO_ID&t=90')  // YouTube with start time
   /// ```
   factory MediaItem.url(String url, {String? tag}) {
     final detectedType = MediaTypeDetector.detectFromUrl(url);
 
-    return MediaItem(type: detectedType, url: url, tag: tag);
+    // Extract YouTube start time if it's a YouTube URL
+    final startTime = detectedType == MediaType.youtube
+        ? MediaTypeDetector.extractYouTubeStartTime(url)
+        : null;
+
+    return MediaItem(
+      type: detectedType,
+      url: url,
+      tag: tag,
+      youtubeStartTime: startTime,
+    );
   }
 
   /// Creates a media item from a local file path with automatic type detection.
@@ -137,6 +164,10 @@ class MediaItem {
   /// Optional hero animation tag.
   final String? tag;
 
+  /// The start time in seconds for YouTube videos.
+  /// If null or 0, the video starts from the beginning.
+  final int? youtubeStartTime;
+
   /// Returns true if this is an image.
   bool get isImage => type == MediaType.image;
 
@@ -177,7 +208,8 @@ class MediaItem {
           url == other.url &&
           path == other.path &&
           assetPath == other.assetPath &&
-          tag == other.tag;
+          tag == other.tag &&
+          youtubeStartTime == other.youtubeStartTime;
 
   @override
   int get hashCode =>
@@ -185,5 +217,6 @@ class MediaItem {
       url.hashCode ^
       path.hashCode ^
       assetPath.hashCode ^
-      tag.hashCode;
+      tag.hashCode ^
+      youtubeStartTime.hashCode;
 }

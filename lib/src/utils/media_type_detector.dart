@@ -79,7 +79,7 @@ class MediaTypeDetector {
     final match = _vimeoRegex.firstMatch(url);
     return match?.group(1);
   }
-  
+
   /// Extracts the start time parameter (t=) from a YouTube URL.
   ///
   /// The parameter can be in seconds (e.g., t=90 for 1min30s).

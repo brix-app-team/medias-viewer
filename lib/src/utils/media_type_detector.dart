@@ -35,6 +35,12 @@ class MediaTypeDetector {
     caseSensitive: false,
   );
 
+  /// Regular expressions for detecting Vimeo URLs.
+  static final RegExp _vimeoRegex = RegExp(
+    r'^(?:https?:\/\/)?(?:www\.|player\.)?vimeo\.com\/(?:video\/)?(\d+)',
+    caseSensitive: false,
+  );
+
   /// Checks if a URL is a YouTube URL.
   ///
   /// Supports formats:
@@ -55,9 +61,29 @@ class MediaTypeDetector {
     return match?.group(1);
   }
 
+  /// Checks if a URL is a Vimeo URL.
+  ///
+  /// Supports formats:
+  /// - https://vimeo.com/VIDEO_ID
+  /// - https://www.vimeo.com/VIDEO_ID
+  /// - https://player.vimeo.com/video/VIDEO_ID
+  /// - vimeo.com/VIDEO_ID (without protocol)
+  static bool isVimeoUrl(String url) {
+    return _vimeoRegex.hasMatch(url);
+  }
+
+  /// Extracts the Vimeo video ID from a URL.
+  ///
+  /// Returns null if the URL is not a valid Vimeo URL.
+  static String? extractVimeoVideoId(String url) {
+    final match = _vimeoRegex.firstMatch(url);
+    return match?.group(1);
+  }
+
   /// Detects the media type from a URL or file path based on its extension.
   ///
   /// Returns [MediaType.youtube] if the URL is a YouTube URL.
+  /// Returns [MediaType.vimeo] if the URL is a Vimeo URL.
   /// Returns [MediaType.image] if the extension matches an image format.
   /// Returns [MediaType.video] if the extension matches a video format.
   ///
@@ -66,6 +92,11 @@ class MediaTypeDetector {
     // Check for YouTube URL first
     if (isYouTubeUrl(url)) {
       return MediaType.youtube;
+    }
+
+    // Check for Vimeo URL
+    if (isVimeoUrl(url)) {
+      return MediaType.vimeo;
     }
 
     final extension = _getExtension(url);
@@ -82,8 +113,8 @@ class MediaTypeDetector {
       'Unable to detect media type from URL: $url\n'
       'Supported image extensions: ${_imageExtensions.join(', ')}\n'
       'Supported video extensions: ${_videoExtensions.join(', ')}\n'
-      'Supported video platforms: YouTube (youtube.com, youtu.be)\n'
-      'Please use MediaItem.imageUrl(), MediaItem.videoUrl(), or MediaItem.youtubeUrl() instead.',
+      'Supported video platforms: YouTube (youtube.com, youtu.be), Vimeo (vimeo.com)\n'
+      'Please use MediaItem.imageUrl(), MediaItem.videoUrl(), MediaItem.youtubeUrl(), or MediaItem.vimeoUrl() instead.',
     );
   }
 

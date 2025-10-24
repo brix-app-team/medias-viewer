@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/medias_viewer.svg)](https://pub.dev/packages/medias_viewer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A powerful and customizable Flutter media viewer for images, videos and Youtube videos with zoom, swipe navigation, and video controls.
+A powerful and customizable Flutter media viewer for images, videos, YouTube and Vimeo videos with zoom, swipe navigation, and video controls.
 <p align="center">
 <img src="https://github.com/brix-app-team/medias-viewer/blob/main/video.gif?raw=true"  width="40%" height="40%"/>
 </p>
@@ -35,6 +35,14 @@ A powerful and customizable Flutter media viewer for images, videos and Youtube 
 - Optimized for Android and iOS with excellent mobile performance
 - Seamless navigation with other media types
 - Simple and fluid integration with better mobile compatibility
+
+🎥 **Vimeo Support**
+- Play Vimeo videos directly in the viewer
+- Auto-detection of Vimeo URLs (vimeo.com, player.vimeo.com)
+- Integrated player without external browser
+- High-quality video streaming
+- Seamless navigation with other media types
+- Simple integration with mobile-optimized playback
 
 🎨 **Customization**
 - Custom background colors
@@ -138,6 +146,7 @@ MediaViewer(
     MediaItem.imageUrl('https://example.com/image1.jpg', tag: 'hero1'),
     MediaItem.videoUrl('https://example.com/video.mp4'),
     MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+    MediaItem.vimeoUrl('https://vimeo.com/76979871'),
     MediaItem.imagePath('/path/to/local/image.jpg'),
     MediaItem.imageAsset('assets/images/photo.png'),
   ],
@@ -183,6 +192,33 @@ class YouTubeGallery extends StatelessWidget {
         MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
         MediaItem.imageUrl('https://example.com/photo.jpg'),
         MediaItem.youtubeUrl('https://youtu.be/9bZkp7q19f0'),
+      ],
+      config: MediaViewerConfig(
+        autoPlayVideo: true,
+        allowFullScreen: true,
+        showBackButton: true,
+        enableDismissOnSwipeDown: true,
+      ),
+      onDismissed: () => Navigator.pop(context),
+    );
+  }
+}
+```
+
+### Vimeo Video Example
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:medias_viewer/medias_viewer.dart';
+
+class VimeoGallery extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MediaViewer(
+      items: [
+        MediaItem.vimeoUrl('https://vimeo.com/76979871'),
+        MediaItem.imageUrl('https://example.com/photo.jpg'),
+        MediaItem.vimeoUrl('https://player.vimeo.com/video/148751763'),
       ],
       config: MediaViewerConfig(
         autoPlayVideo: true,
@@ -376,6 +412,27 @@ MediaItem.url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 - `youtube.com/watch?v=VIDEO_ID` (without protocol)
 
 **Note:** Make sure to add `youtube_player_flutter` to your dependencies. The package is compatible with Android and iOS platforms, with excellent mobile performance.
+
+#### Vimeo Videos
+
+```dart
+// Vimeo video from standard URL
+MediaItem.vimeoUrl('https://vimeo.com/76979871')
+
+// Vimeo video from player URL
+MediaItem.vimeoUrl('https://player.vimeo.com/video/148751763')
+
+// Vimeo video with auto-detection
+MediaItem.url('https://vimeo.com/76979871')
+```
+
+**Supported Vimeo URL formats:**
+- `https://vimeo.com/VIDEO_ID`
+- `https://www.vimeo.com/VIDEO_ID`
+- `https://player.vimeo.com/video/VIDEO_ID`
+- `vimeo.com/VIDEO_ID` (without protocol)
+
+**Note:** Make sure to add `vimeo_video_player` to your dependencies. The package provides high-quality video streaming for mobile platforms.
 
 ### Configuration Options
 

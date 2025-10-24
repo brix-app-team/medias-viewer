@@ -118,6 +118,13 @@ class ExampleHomePage extends StatelessWidget {
             description: 'Play YouTube videos in the viewer',
             onTap: () => _showYouTubeGallery(context),
           ),
+          const SizedBox(height: 16),
+          _buildExampleCard(
+            context,
+            title: 'Vimeo Video Gallery',
+            description: 'Play Vimeo videos in the viewer',
+            onTap: () => _showVimeoGallery(context),
+          ),
         ],
       ),
     );
@@ -407,6 +414,48 @@ class ExampleHomePage extends StatelessWidget {
             // Another image
             const MediaItem.imageUrl(
               'https://picsum.photos/800/600?random=101',
+            ),
+          ],
+          config: MediaViewerConfig(
+            autoPlayVideo: true,
+            allowFullScreen: true,
+            showBackButton: true,
+            showNavigationArrows: true,
+            enableDismissOnSwipeDown: true,
+            indicatorPosition: IndicatorPosition.topCenter,
+            indicatorStyle: const IndicatorStyle(
+              backgroundColor: Colors.black54,
+              borderRadius: 16,
+            ),
+          ),
+          onDismissed: () => Navigator.of(context).pop(),
+        ),
+      ),
+    );
+  }
+
+  void _showVimeoGallery(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MediaViewer(
+          items: [
+            // Vimeo videos
+            const MediaItem.vimeoUrl('https://vimeo.com/76979871'),
+            // Mix with images
+            const MediaItem.imageUrl(
+              'https://picsum.photos/800/600?random=200',
+            ),
+            // Another Vimeo video
+            const MediaItem.vimeoUrl(
+              'https://player.vimeo.com/video/148751763',
+            ),
+            // Regular video
+            const MediaItem.videoUrl(
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+            ),
+            // Another image
+            const MediaItem.imageUrl(
+              'https://picsum.photos/800/600?random=201',
             ),
           ],
           config: MediaViewerConfig(

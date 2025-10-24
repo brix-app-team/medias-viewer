@@ -61,6 +61,21 @@ class MediaItem {
   const MediaItem.youtubeUrl(String url)
     : this(type: MediaType.youtube, url: url);
 
+  /// Creates a Vimeo video media item from a Vimeo URL.
+  ///
+  /// Supports the following URL formats:
+  /// - https://vimeo.com/VIDEO_ID
+  /// - https://www.vimeo.com/VIDEO_ID
+  /// - https://player.vimeo.com/video/VIDEO_ID
+  /// - vimeo.com/VIDEO_ID (without protocol)
+  ///
+  /// Example:
+  /// ```dart
+  /// MediaItem.vimeoUrl('https://vimeo.com/123456789')
+  /// MediaItem.vimeoUrl('https://player.vimeo.com/video/123456789')
+  /// ```
+  const MediaItem.vimeoUrl(String url) : this(type: MediaType.vimeo, url: url);
+
   /// Creates a media item from a URL with automatic type detection.
   ///
   /// The media type (image or video) is automatically detected based on the
@@ -131,6 +146,9 @@ class MediaItem {
   /// Returns true if this is a YouTube video.
   bool get isYouTube => type == MediaType.youtube;
 
+  /// Returns true if this is a Vimeo video.
+  bool get isVimeo => type == MediaType.vimeo;
+
   /// Returns the source of the media (url, path, or assetPath).
   String get source => url ?? path ?? assetPath ?? '';
 
@@ -140,6 +158,14 @@ class MediaItem {
   String? get youtubeVideoId {
     if (!isYouTube || url == null) return null;
     return MediaTypeDetector.extractYouTubeVideoId(url!);
+  }
+
+  /// Returns the Vimeo video ID if this is a Vimeo media item.
+  ///
+  /// Returns null if this is not a Vimeo media item or if the ID cannot be extracted.
+  String? get vimeoVideoId {
+    if (!isVimeo || url == null) return null;
+    return MediaTypeDetector.extractVimeoVideoId(url!);
   }
 
   @override

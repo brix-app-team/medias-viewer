@@ -8,4 +8,7 @@ enum MediaType {
 
   /// A YouTube video media type
   youtube,
+
+  /// A Vimeo video media type
+  vimeo,
 }

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2025-10-24
+
+### Added
+- **Vimeo Video Support**: Play Vimeo videos directly in the media viewer
+  - New `MediaItem.vimeoUrl()` constructor for Vimeo videos
+  - Automatic Vimeo URL detection (supports vimeo.com and player.vimeo.com formats)
+  - Integrated Vimeo player using `vimeo_video_player`
+  - Seamless integration with existing media types (images, videos, YouTube)
+  - Support for various Vimeo URL formats
+  - New `MediaType.vimeo` enum value
+  - New `isVimeo` getter on `MediaItem`
+  - New `vimeoVideoId` getter on `MediaItem`
+  - Auto-detection of Vimeo URLs in `MediaTypeDetector`
+
+### Technical Changes
+- Added `VimeoViewerWidget` for displaying Vimeo videos
+- Updated `MediaViewer` to handle Vimeo media items
+- Extended `MediaTypeDetector` with Vimeo URL parsing capabilities
+- Updated example app with Vimeo gallery demonstration
+
+### Dependencies
+- Added `vimeo_video_player: ^1.0.1` for Vimeo video playback
+
 ## [0.5.0] - 2025-10-10
 
 ### Changed

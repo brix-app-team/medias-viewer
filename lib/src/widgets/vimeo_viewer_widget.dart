@@ -34,7 +34,6 @@ class VimeoViewerWidget extends StatefulWidget {
 class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
   String? _videoId;
   String? _errorMessage;
-  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -67,23 +66,14 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
   }
 
   void _onPlay() {
-    setState(() {
-      _isPlaying = true;
-    });
     widget.onPlayingStateChanged?.call(true);
   }
 
   void _onPause() {
-    setState(() {
-      _isPlaying = false;
-    });
     widget.onPlayingStateChanged?.call(false);
   }
 
   void _onFinish() {
-    setState(() {
-      _isPlaying = false;
-    });
     widget.onPlayingStateChanged?.call(false);
   }
 

@@ -9,6 +9,7 @@ class MediaItem {
   /// The [url] is the network URL of the media.
   /// The [path] is an optional local file path (for local media).
   /// The [assetPath] is an optional asset path (for bundled media).
+  /// The [headers] is a dictionary of http headers (for external media).
   /// The [tag] is an optional hero animation tag.
   /// The [youtubeStartTime] is the start time in seconds for YouTube videos.
   const MediaItem({
@@ -16,6 +17,7 @@ class MediaItem {
     this.url,
     this.path,
     this.assetPath,
+    this.headers,
     this.tag,
     this.youtubeStartTime,
   }) : assert(
@@ -24,8 +26,8 @@ class MediaItem {
        );
 
   /// Creates an image media item from a network URL.
-  const MediaItem.imageUrl(String url, {String? tag})
-    : this(type: MediaType.image, url: url, tag: tag);
+  const MediaItem.imageUrl(String url, {String? tag, Map<String, String>? headers})
+    : this(type: MediaType.image, url: url, tag: tag, headers: headers);
 
   /// Creates an image media item from a local file path.
   const MediaItem.imagePath(String path, {String? tag})
@@ -36,7 +38,7 @@ class MediaItem {
     : this(type: MediaType.image, assetPath: assetPath, tag: tag);
 
   /// Creates a video media item from a network URL.
-  const MediaItem.videoUrl(String url) : this(type: MediaType.video, url: url);
+  const MediaItem.videoUrl(String url, {Map<String, String>? headers}) : this(type: MediaType.video, url: url, headers: headers);
 
   /// Creates a video media item from a local file path.
   const MediaItem.videoPath(String path)
@@ -109,7 +111,7 @@ class MediaItem {
   /// MediaItem.url('https://example.com/video.mp4')  // Detected as video
   /// MediaItem.url('https://www.youtube.com/watch?v=VIDEO_ID&t=90')  // YouTube with start time
   /// ```
-  factory MediaItem.url(String url, {String? tag}) {
+  factory MediaItem.url(String url, {String? tag, Map<String, String>? headers}) {
     final detectedType = MediaTypeDetector.detectFromUrl(url);
 
     // Extract YouTube start time if it's a YouTube URL
@@ -120,6 +122,7 @@ class MediaItem {
     return MediaItem(
       type: detectedType,
       url: url,
+      headers: headers,
       tag: tag,
       youtubeStartTime: startTime,
     );
@@ -160,6 +163,9 @@ class MediaItem {
 
   /// The asset path of the media.
   final String? assetPath;
+
+  /// The http headers sent when accessing an external media resource.
+  final Map<String, String>? headers;
 
   /// Optional hero animation tag.
   final String? tag;
@@ -208,6 +214,7 @@ class MediaItem {
           url == other.url &&
           path == other.path &&
           assetPath == other.assetPath &&
+          headers == other.headers &&
           tag == other.tag &&
           youtubeStartTime == other.youtubeStartTime;
 
@@ -217,6 +224,7 @@ class MediaItem {
       url.hashCode ^
       path.hashCode ^
       assetPath.hashCode ^
+      headers.hashCode ^
       tag.hashCode ^
       youtubeStartTime.hashCode;
 }

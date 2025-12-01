@@ -53,6 +53,7 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
           formatHint: widget.item.url!.contains('.m3u8')
               ? VideoFormat.hls
               : null,
+          httpHeaders: widget.item.headers ?? const <String, String>{},
         );
       } else if (widget.item.path != null) {
         _videoPlayerController = VideoPlayerController.file(

@@ -87,7 +87,7 @@ class _MediaViewerState extends State<MediaViewer> {
     if (_currentIndex > 0) {
       final prevItem = widget.items[_currentIndex - 1];
       if (prevItem.isImage && prevItem.url != null) {
-        precacheImage(CachedNetworkImageProvider(prevItem.url!), context);
+        precacheImage(CachedNetworkImageProvider(prevItem.url!, headers: prevItem.headers), context);
       }
     }
 
@@ -95,7 +95,7 @@ class _MediaViewerState extends State<MediaViewer> {
     if (_currentIndex < widget.items.length - 1) {
       final nextItem = widget.items[_currentIndex + 1];
       if (nextItem.isImage && nextItem.url != null) {
-        precacheImage(CachedNetworkImageProvider(nextItem.url!), context);
+        precacheImage(CachedNetworkImageProvider(nextItem.url!, headers: nextItem.headers), context);
       }
     }
   }

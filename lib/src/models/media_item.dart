@@ -26,8 +26,11 @@ class MediaItem {
        );
 
   /// Creates an image media item from a network URL.
-  const MediaItem.imageUrl(String url, {String? tag, Map<String, String>? headers})
-    : this(type: MediaType.image, url: url, tag: tag, headers: headers);
+  const MediaItem.imageUrl(
+    String url, {
+    String? tag,
+    Map<String, String>? headers,
+  }) : this(type: MediaType.image, url: url, tag: tag, headers: headers);
 
   /// Creates an image media item from a local file path.
   const MediaItem.imagePath(String path, {String? tag})
@@ -38,7 +41,8 @@ class MediaItem {
     : this(type: MediaType.image, assetPath: assetPath, tag: tag);
 
   /// Creates a video media item from a network URL.
-  const MediaItem.videoUrl(String url, {Map<String, String>? headers}) : this(type: MediaType.video, url: url, headers: headers);
+  const MediaItem.videoUrl(String url, {Map<String, String>? headers})
+    : this(type: MediaType.video, url: url, headers: headers);
 
   /// Creates a video media item from a local file path.
   const MediaItem.videoPath(String path)
@@ -111,7 +115,11 @@ class MediaItem {
   /// MediaItem.url('https://example.com/video.mp4')  // Detected as video
   /// MediaItem.url('https://www.youtube.com/watch?v=VIDEO_ID&t=90')  // YouTube with start time
   /// ```
-  factory MediaItem.url(String url, {String? tag, Map<String, String>? headers}) {
+  factory MediaItem.url(
+    String url, {
+    String? tag,
+    Map<String, String>? headers,
+  }) {
     final detectedType = MediaTypeDetector.detectFromUrl(url);
 
     // Extract YouTube start time if it's a YouTube URL

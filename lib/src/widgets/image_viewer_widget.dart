@@ -30,7 +30,10 @@ class ImageViewerWidget extends StatelessWidget {
 
     if (item.url != null) {
       // Network image
-      imageProvider = CachedNetworkImageProvider(item.url!, headers: item.headers);
+      imageProvider = CachedNetworkImageProvider(
+        item.url!,
+        headers: item.headers,
+      );
     } else if (item.path != null) {
       // File image
       imageProvider = FileImage(File(item.path!));

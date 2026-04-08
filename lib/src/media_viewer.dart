@@ -170,21 +170,18 @@ class _MediaViewerState extends State<MediaViewer> {
                 onTap: _handleTap,
               );
             } else if (item.isYouTube) {
-              return GestureDetector(
-                onTap: _handleTap,
-                child: YouTubeViewerWidget(
-                  key: ValueKey('youtube_$actualIndex'),
-                  item: item,
-                  config: widget.config,
-                  autoPlay: actualIndex == _currentIndex,
-                  onPlayingStateChanged: (isPlaying) {
-                    if (widget.config.hideArrowsWhenVideoPlays) {
-                      setState(() {
-                        _isVideoPlaying = isPlaying;
-                      });
-                    }
-                  },
-                ),
+              return YouTubeViewerWidget(
+                key: ValueKey('youtube_$actualIndex'),
+                item: item,
+                config: widget.config,
+                autoPlay: actualIndex == _currentIndex,
+                onPlayingStateChanged: (isPlaying) {
+                  if (widget.config.hideArrowsWhenVideoPlays) {
+                    setState(() {
+                      _isVideoPlaying = isPlaying;
+                    });
+                  }
+                },
               );
             } else if (item.isVimeo) {
               return GestureDetector(
@@ -204,21 +201,18 @@ class _MediaViewerState extends State<MediaViewer> {
                 ),
               );
             } else {
-              return GestureDetector(
-                onTap: _handleTap,
-                child: VideoViewerWidget(
-                  key: ValueKey('video_$actualIndex'),
-                  item: item,
-                  config: widget.config,
-                  autoPlay: actualIndex == _currentIndex,
-                  onPlayingStateChanged: (isPlaying) {
-                    if (widget.config.hideArrowsWhenVideoPlays) {
-                      setState(() {
-                        _isVideoPlaying = isPlaying;
-                      });
-                    }
-                  },
-                ),
+              return VideoViewerWidget(
+                key: ValueKey('video_$actualIndex'),
+                item: item,
+                config: widget.config,
+                autoPlay: actualIndex == _currentIndex,
+                onPlayingStateChanged: (isPlaying) {
+                  if (widget.config.hideArrowsWhenVideoPlays) {
+                    setState(() {
+                      _isVideoPlaying = isPlaying;
+                    });
+                  }
+                },
               );
             }
           },

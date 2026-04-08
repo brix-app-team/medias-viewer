@@ -77,8 +77,10 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
   }
 
   String _colorToHex(Color color) {
-    final hex = color.value.toRadixString(16).padLeft(8, '0');
-    return '#${hex.substring(2)}';
+    final r = (color.r * 255).round().toRadixString(16).padLeft(2, '0');
+    final g = (color.g * 255).round().toRadixString(16).padLeft(2, '0');
+    final b = (color.b * 255).round().toRadixString(16).padLeft(2, '0');
+    return '#$r$g$b';
   }
 
   String _buildIframeUrl() {

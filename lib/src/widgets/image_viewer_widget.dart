@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/media_item.dart';
 import '../models/media_viewer_config.dart';
+import '../utils/file_sources.dart';
 
 /// Widget for displaying an image with zoom and pan capabilities.
 class ImageViewerWidget extends StatelessWidget {
@@ -35,8 +35,8 @@ class ImageViewerWidget extends StatelessWidget {
         headers: item.headers,
       );
     } else if (item.path != null) {
-      // File image
-      imageProvider = FileImage(File(item.path!));
+      // File image (mobile/desktop only; throws on web)
+      imageProvider = fileImageProvider(item.path!);
     } else if (item.assetPath != null) {
       // Asset image
       imageProvider = AssetImage(item.assetPath!);

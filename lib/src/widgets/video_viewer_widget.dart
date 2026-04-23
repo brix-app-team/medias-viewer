@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import '../models/media_item.dart';
 import '../models/media_viewer_config.dart';
+import '../utils/file_sources.dart';
 
 /// Widget for displaying a video with playback controls.
 class VideoViewerWidget extends StatefulWidget {
@@ -56,9 +56,8 @@ class _VideoViewerWidgetState extends State<VideoViewerWidget> {
           httpHeaders: widget.item.headers ?? const <String, String>{},
         );
       } else if (widget.item.path != null) {
-        _videoPlayerController = VideoPlayerController.file(
-          File(widget.item.path!),
-        );
+        // File-backed video (mobile/desktop only; throws on web)
+        _videoPlayerController = fileVideoController(widget.item.path!);
       } else if (widget.item.assetPath != null) {
         _videoPlayerController = VideoPlayerController.asset(
           widget.item.assetPath!,

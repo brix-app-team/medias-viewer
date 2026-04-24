@@ -80,6 +80,7 @@ A powerful and customizable Flutter media viewer for images, videos, YouTube and
 - ✅ Android
 - ✅ iOS
 - ✅ Desktop (macOS)
+- ✅ Web
 
 ## Installation
 

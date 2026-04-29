@@ -1,6 +1,6 @@
 name: medias_viewer
 description: A powerful and customizable Flutter media viewer for images and videos with zoom, swipe navigation, and video controls.
-version: 0.7.0
+version: 0.7.1
 homepage: https://github.com/brix-app-team/medias-viewer
 repository: https://github.com/brix-app-team/medias-viewer
 issue_tracker: https://github.com/brix-app-team/medias-viewer/issues
@@ -26,6 +26,11 @@ dependencies:
   
   # Utilities
   cached_network_image: ^3.4.1
+
+  # Absorbs clicks over HTML platform views (HTMLVideoElement, iframes) on
+  # Flutter web — without it, taps on overlay controls fall through to the
+  # embedded media element instead of reaching their handlers.
+  pointer_interceptor: ^0.10.1+2
 
 dev_dependencies:
   flutter_test:

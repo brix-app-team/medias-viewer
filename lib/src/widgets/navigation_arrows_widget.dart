@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../models/media_viewer_config.dart';
 
 /// Widget that displays navigation arrows for moving between media items.
@@ -116,18 +117,22 @@ class _ArrowButton extends StatelessWidget {
       return SizedBox(width: size);
     }
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.black26,
-            shape: BoxShape.circle,
+    // PointerInterceptor absorbs taps before they reach an underlying
+    // HTMLVideoElement / iframe on Flutter web. No-op on mobile.
+    return PointerInterceptor(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          customBorder: const CircleBorder(),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.black26,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: size),
           ),
-          child: Icon(icon, color: color, size: size),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 /// Widget that displays a back button.
 class BackButtonWidget extends StatelessWidget {
@@ -17,19 +18,23 @@ class BackButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // PointerInterceptor absorbs taps before they reach an underlying
+    // HTMLVideoElement / iframe on Flutter web. No-op on mobile.
     return SafeArea(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          customBorder: const CircleBorder(),
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.black38,
-              shape: BoxShape.circle,
+      child: PointerInterceptor(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onPressed,
+            customBorder: const CircleBorder(),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black38,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.close, color: color, size: 28),
             ),
-            child: Icon(Icons.close, color: color, size: 28),
           ),
         ),
       ),

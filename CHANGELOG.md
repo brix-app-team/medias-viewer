@@ -5,40 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-05-05
+
+- bump version to stable
+
 ## [0.7.1] - 2026-04-29
 
 ### Fixed
+
 - Web: close button (X) and navigation arrows over a video would not respond — clicks fell through to the underlying `HTMLVideoElement` / iframe. Both controls are now wrapped in `PointerInterceptor` so taps reach their handlers.
 
 ### Added
+
 - Dependency on `pointer_interceptor` (^0.10.1+2)
 
 ## [0.7.0] - 2026-04-24
 
 ### Added
-- Support flutter Web
 
+- Support flutter Web
 
 ## [0.6.3] - 2026-04-08
 
 ### Fixed
+
 - Removed tap-to-dismiss GestureDetector from YouTube and video player types to prevent progress bar taps from closing the viewer instead of seeking
 
 ## [0.6.2] - 2026-20-03
 
 ### Added
-- **Vimeo**: Support autoplay et landscape mode en fullscreen
 
+- **Vimeo**: Support autoplay et landscape mode en fullscreen
 
 ## [0.6.1] - 2025-12-01
 
 ### Added
-- **Custom Headers Support**: Add custom HTTP Headers for external media (Thanks to @ETolboom) [PR/2](https://github.com/brix-app-team/medias-viewer/pull/2)
 
+- **Custom Headers Support**: Add custom HTTP Headers for external media (Thanks to @ETolboom) [PR/2](https://github.com/brix-app-team/medias-viewer/pull/2)
 
 ## [0.6.0] - 2025-10-24
 
 ### Added
+
 - **Vimeo Video Support**: Play Vimeo videos directly in the media viewer
   - New `MediaItem.vimeoUrl()` constructor for Vimeo videos
   - Automatic Vimeo URL detection (supports vimeo.com and player.vimeo.com formats)
@@ -51,12 +59,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Auto-detection of Vimeo URLs in `MediaTypeDetector`
 
 ### Technical Changes
+
 - Added `VimeoViewerWidget` for displaying Vimeo videos
 - Updated `MediaViewer` to handle Vimeo media items
 - Extended `MediaTypeDetector` with Vimeo URL parsing capabilities
 - Updated example app with Vimeo gallery demonstration
 
 ### Dependencies
+
 - Added `vimeo_video_player: ^1.0.1` for Vimeo video playback
 
 ## [0.5.1] - 2025-10-15

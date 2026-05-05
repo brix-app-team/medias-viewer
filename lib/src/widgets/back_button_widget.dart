@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'pointer_interceptor/pointer_interceptor.dart';
 
 /// Widget that displays a back button.
 class BackButtonWidget extends StatelessWidget {

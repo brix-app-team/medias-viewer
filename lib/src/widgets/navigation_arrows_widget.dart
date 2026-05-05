@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../models/media_viewer_config.dart';
+import 'pointer_interceptor/pointer_interceptor.dart';
 
 /// Widget that displays navigation arrows for moving between media items.
 class NavigationArrowsWidget extends StatelessWidget {

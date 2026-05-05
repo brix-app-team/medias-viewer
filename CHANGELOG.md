@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2026-05-05
 
-- bump version to stable
+### Added
+- Add platform and example for flutter web
+- Bump version to stable
 
 ## [0.7.1] - 2026-04-29
 

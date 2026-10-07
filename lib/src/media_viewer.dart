@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'models/media_item.dart';
 import 'models/media_viewer_config.dart';
 import 'widgets/image_viewer_widget.dart';
@@ -60,6 +61,7 @@ class _MediaViewerState extends State<MediaViewer> {
   late PageController _pageController;
   late int _currentIndex;
   bool _isVideoPlaying = false;
+  bool _wakelockHeld = false;
 
   @override
   void initState() {
@@ -75,6 +77,7 @@ class _MediaViewerState extends State<MediaViewer> {
 
   @override
   void dispose() {
+    _setWakelock(false);
     _pageController.dispose();
     super.dispose();
   }
@@ -107,13 +110,33 @@ class _MediaViewerState extends State<MediaViewer> {
   }
 
   void _onPageChanged(int index) {
+    // The new page's video reports its own state once it plays.
+    _setWakelock(false);
     setState(() {
       _currentIndex = index;
+      _isVideoPlaying = false;
     });
     _precacheAdjacentImages();
 
     // Call the callback if provided
     widget.config.onPageChanged?.call(index);
+  }
+
+  /// Keeps the screen awake while the current page's video plays. A page
+  /// swiped away keeps reporting until disposed, so only the current one counts.
+  void _onPlayingStateChanged(int index, bool isPlaying) {
+    if (index != _currentIndex) return;
+    _setWakelock(isPlaying);
+    if (widget.config.hideArrowsWhenVideoPlays) {
+      setState(() => _isVideoPlaying = isPlaying);
+    }
+  }
+
+  void _setWakelock(bool enable) {
+    if (_wakelockHeld == enable) return;
+    _wakelockHeld = enable;
+    // Browsers may refuse (e.g. Safari Low Power Mode); playback is unaffected.
+    WakelockPlus.toggle(enable: enable).catchError((Object _) {});
   }
 
   void _handleTap() {
@@ -175,13 +198,8 @@ class _MediaViewerState extends State<MediaViewer> {
                 item: item,
                 config: widget.config,
                 autoPlay: actualIndex == _currentIndex,
-                onPlayingStateChanged: (isPlaying) {
-                  if (widget.config.hideArrowsWhenVideoPlays) {
-                    setState(() {
-                      _isVideoPlaying = isPlaying;
-                    });
-                  }
-                },
+                onPlayingStateChanged: (isPlaying) =>
+                    _onPlayingStateChanged(index, isPlaying),
               );
             } else if (item.isVimeo) {
               return GestureDetector(
@@ -191,13 +209,8 @@ class _MediaViewerState extends State<MediaViewer> {
                   item: item,
                   config: widget.config,
                   autoPlay: actualIndex == _currentIndex,
-                  onPlayingStateChanged: (isPlaying) {
-                    if (widget.config.hideArrowsWhenVideoPlays) {
-                      setState(() {
-                        _isVideoPlaying = isPlaying;
-                      });
-                    }
-                  },
+                  onPlayingStateChanged: (isPlaying) =>
+                      _onPlayingStateChanged(index, isPlaying),
                 ),
               );
             } else {
@@ -206,13 +219,8 @@ class _MediaViewerState extends State<MediaViewer> {
                 item: item,
                 config: widget.config,
                 autoPlay: actualIndex == _currentIndex,
-                onPlayingStateChanged: (isPlaying) {
-                  if (widget.config.hideArrowsWhenVideoPlays) {
-                    setState(() {
-                      _isVideoPlaying = isPlaying;
-                    });
-                  }
-                },
+                onPlayingStateChanged: (isPlaying) =>
+                    _onPlayingStateChanged(index, isPlaying),
               );
             }
           },

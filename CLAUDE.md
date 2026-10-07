@@ -41,7 +41,7 @@ lib/
     widgets/
       image_viewer_widget.dart      # PhotoView wrapper
       video_viewer_widget.dart      # Chewie/video_player wrapper
-      youtube_viewer_widget.dart    # youtube_player_flutter wrapper
+      youtube_viewer_widget.dart    # youtube_player_iframe wrapper
       vimeo_viewer_widget.dart      # vimeo_video_player wrapper
       page_indicator_widget.dart    # "X of Y" counter
       navigation_arrows_widget.dart # Left/right arrows

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-07
+
+### Added
+- The screen wakelock is held while a video plays (`wakelock_plus`), and released on pause, end, page change and dismiss. The screen no longer sleeps mid-video, and apps can read `WakelockPlus.enabled` as an "is media playing" signal.
+
+### Changed
+- YouTube now uses `youtube_player_iframe` ^6 on every platform. The mobile `youtube_player_flutter` implementation and that dependency are removed; fullscreen is handled by the player.
+- Dependencies: `cached_network_image` ^4.0.3, `chewie` ^1.17.2, `video_player` ^2.14.1, `flutter_inappwebview` ^6.1.5, `pointer_interceptor` ^0.10.1+3, `flutter_lints` ^6.0.0.
+- Requires Flutter >= 3.44.0 / Dart ^3.12.0 (needed by `cached_network_image` 4 and `youtube_player_iframe` 6).
+
+### Fixed
+- Navigation arrows hidden by a playing video now come back after swiping to another page.
+- Example/README: replaced two Vimeo demo videos that no longer play (148751763 deleted, 76979871 fails at playback) and added a close button to the video gallery demo.
+
 ## [1.0.0] - 2026-05-05
 
 ### Added

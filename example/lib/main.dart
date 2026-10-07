@@ -248,7 +248,13 @@ class ExampleHomePage extends StatelessWidget {
               'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
           ],
-          config: MediaViewerConfig(autoPlayVideo: true),
+          // Video pages have no tap-to-dismiss: the close button is the way out.
+          // Below Chewie's top bar (fullscreen/mute) so the two don't overlap.
+          config: MediaViewerConfig(
+            autoPlayVideo: true,
+            showBackButton: true,
+            backButtonPadding: const EdgeInsets.only(top: 56, left: 12),
+          ),
           onDismissed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -442,15 +448,13 @@ class ExampleHomePage extends StatelessWidget {
         builder: (_) => MediaViewer(
           items: [
             // Vimeo videos
-            const MediaItem.vimeoUrl('https://vimeo.com/76979871'),
+            const MediaItem.vimeoUrl('https://vimeo.com/1084537'),
             // Mix with images
             const MediaItem.imageUrl(
               'https://picsum.photos/800/600?random=200',
             ),
             // Another Vimeo video
-            const MediaItem.vimeoUrl(
-              'https://player.vimeo.com/video/148751763',
-            ),
+            const MediaItem.vimeoUrl('https://player.vimeo.com/video/22439234'),
             // Regular video
             const MediaItem.videoUrl(
               'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',

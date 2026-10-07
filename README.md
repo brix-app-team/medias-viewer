@@ -154,7 +154,7 @@ MediaViewer(
     MediaItem.imageUrl('https://example.com/image1.jpg', tag: 'hero1'),
     MediaItem.videoUrl('https://example.com/video.mp4'),
     MediaItem.youtubeUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
-    MediaItem.vimeoUrl('https://vimeo.com/76979871'),
+    MediaItem.vimeoUrl('https://vimeo.com/1084537'),
     MediaItem.imagePath('/path/to/local/image.jpg'),
     MediaItem.imageAsset('assets/images/photo.png'),
   ],
@@ -224,9 +224,9 @@ class VimeoGallery extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaViewer(
       items: [
-        MediaItem.vimeoUrl('https://vimeo.com/76979871'),
+        MediaItem.vimeoUrl('https://vimeo.com/1084537'),
         MediaItem.imageUrl('https://example.com/photo.jpg'),
-        MediaItem.vimeoUrl('https://player.vimeo.com/video/148751763'),
+        MediaItem.vimeoUrl('https://player.vimeo.com/video/22439234'),
       ],
       config: MediaViewerConfig(
         autoPlayVideo: true,
@@ -428,19 +428,19 @@ MediaItem.youtubeUrl('https://youtu.be/dQw4w9WgXcQ?t=30')
 - `https://youtu.be/VIDEO_ID`
 - `youtube.com/watch?v=VIDEO_ID` (without protocol)
 
-**Note:** Make sure to add `youtube_player_flutter` to your dependencies. The package is compatible with Android and iOS platforms, with excellent mobile performance.
+YouTube playback uses `youtube_player_iframe` on every platform (WebView on mobile, iframe on web).
 
 #### Vimeo Videos
 
 ```dart
 // Vimeo video from standard URL
-MediaItem.vimeoUrl('https://vimeo.com/76979871')
+MediaItem.vimeoUrl('https://vimeo.com/1084537')
 
 // Vimeo video from player URL
-MediaItem.vimeoUrl('https://player.vimeo.com/video/148751763')
+MediaItem.vimeoUrl('https://player.vimeo.com/video/22439234')
 
 // Vimeo video with auto-detection
-MediaItem.url('https://vimeo.com/76979871')
+MediaItem.url('https://vimeo.com/1084537')
 ```
 
 **Supported Vimeo URL formats:**
@@ -576,16 +576,17 @@ Style configuration for the page indicator.
 
 ## Requirements
 
-- Flutter >= 3.24.0
-- Dart >= 3.9.2
+- Flutter >= 3.44.0
+- Dart >= 3.12.0
 
 ## Dependencies
 
 - `photo_view`: ^0.15.0 - Image zoom and pan
-- `video_player`: ^2.9.2 - Video playback
-- `chewie`: ^1.8.5 - Custom video player with controls
-- `youtube_player_flutter`: 9.1.3 - YouTube video playback (optimized for mobile)
-- `cached_network_image`: ^3.4.1 - Network image caching
+- `video_player`: ^2.14.1 - Video playback
+- `chewie`: ^1.17.2 - Custom video player with controls
+- `youtube_player_iframe`: ^6.0.2 - YouTube video playback
+- `cached_network_image`: ^4.0.3 - Network image caching
+- `wakelock_plus`: ^1.7.0 - Keeps the screen awake during playback
 
 ## Contributing
 

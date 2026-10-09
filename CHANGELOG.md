@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-09
+
+### Fixed
+- Web: YouTube loading thumbnail now uses the JPEG variant. The default WebP one is served by `i3.ytimg.com` without CORS headers, which Flutter web cannot decode (`XMLHttpRequest cannot load … due to access control checks` and `WebGL: texImage2D: no image` in the console).
+- Web: Vimeo now loads the player URL directly in the iframe, with `referrerPolicy: strict-origin-when-cross-origin`. The HTML page was loaded from a `data:` URL, whose opaque origin never sends Vimeo a Referer, so domain-restricted videos could not play.
+
 ## [1.1.0] - 2026-10-07
 
 ### Added

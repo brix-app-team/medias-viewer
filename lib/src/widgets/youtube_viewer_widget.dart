@@ -125,7 +125,14 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
       color: widget.config.backgroundColor,
       child: SafeArea(
         child: Center(
-          child: YoutubePlayer(controller: _controller!, aspectRatio: 16 / 9),
+          child: YoutubePlayer(
+            controller: _controller!,
+            aspectRatio: 16 / 9,
+            // The default WebP thumbnail is served without CORS headers, which
+            // Flutter web cannot decode (console errors, no thumbnail); the
+            // JPEG one allows any origin.
+            thumbnailFormat: ThumbnailFormat.jpeg,
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../models/media_item.dart';
@@ -183,6 +184,8 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
       );
     }
 
+    if (kIsWeb) return _buildWebPlayer();
+
     return Container(
       color: widget.config.backgroundColor,
       child: SafeArea(
@@ -223,6 +226,27 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
               // Fullscreen exit is handled natively by InAppWebView
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  /// On web, the HTML page above would be loaded from a `data:` URL, whose
+  /// opaque origin never sends Vimeo a Referer (domain-restricted videos then
+  /// refuse to play). Load the player URL itself in the iframe instead, with
+  /// a referrer policy that survives a host page serving
+  /// `Referrer-Policy: same-origin`.
+  Widget _buildWebPlayer() {
+    return Container(
+      color: widget.config.backgroundColor,
+      child: Center(
+        child: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            iframeAllow: 'autoplay; fullscreen; picture-in-picture',
+            iframeAllowFullscreen: true,
+            iframeReferrerPolicy: ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
+          ),
+          initialUrlRequest: URLRequest(url: WebUri(_buildIframeUrl())),
         ),
       ),
     );

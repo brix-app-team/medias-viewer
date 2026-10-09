@@ -21,6 +21,9 @@ dependencies:
   chewie: ^1.17.2
 
   youtube_player_iframe: ^6.0.2
+  # Extended on web by src/widgets/youtube_referrer_policy (Referer fix).
+  youtube_player_iframe_web: ^3.1.3
+  webview_flutter_platform_interface: ^2.15.1
   flutter_inappwebview: ^6.1.5
   
   # Utilities

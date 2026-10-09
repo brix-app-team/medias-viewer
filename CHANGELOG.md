@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-09
+
+### Added
+- Dependencies on `youtube_player_iframe_web` (^3.1.3) and `webview_flutter_platform_interface` (^2.15.1), extended on web for the Referer fix below.
+
+### Fixed
+- Web: YouTube no longer fails with error 153 ("Video player configuration error", blank player) under Safari when the host page serves a strict `Referrer-Policy` such as `same-origin`. The player page is a `srcdoc` iframe that inherits that policy, so the embed request carried no Referer; a `<meta name="referrer" content="strict-origin-when-cross-origin">` is now injected into it. Only the stock web platform of `youtube_player_iframe` is replaced, so an app that installed its own keeps it.
+- Web: YouTube loading thumbnail now uses the JPEG variant. The default WebP one is served by `i3.ytimg.com` without CORS headers, which Flutter web cannot decode (`XMLHttpRequest cannot load … due to access control checks` and `WebGL: texImage2D: no image` in the console).
+- Web: Vimeo now loads the player URL directly in the iframe, with `referrerPolicy: strict-origin-when-cross-origin`. The HTML page was loaded from a `data:` URL, whose opaque origin never sends Vimeo a Referer, so domain-restricted videos could not play.
+
 ## [1.1.0] - 2026-10-07
 
 ### Added

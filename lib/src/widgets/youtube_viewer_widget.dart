@@ -3,6 +3,7 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../models/media_item.dart';
 import '../models/media_viewer_config.dart';
 import '../utils/media_type_detector.dart';
+import 'youtube_referrer_policy/youtube_referrer_policy.dart';
 
 /// Widget for displaying a YouTube video via `youtube_player_iframe`
 /// (WebView on mobile/desktop, iframe on web; fullscreen handled by the player).
@@ -52,6 +53,8 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
             ? MediaTypeDetector.extractYouTubeStartTime(widget.item.url!)
             : null);
 
+    // Must run before the controller creates its web iframe.
+    ensureYoutubeReferrerPolicy();
     _controller = YoutubePlayerController.fromVideoId(
       videoId: videoId,
       autoPlay: widget.autoPlay || widget.config.autoPlayVideo,
@@ -125,7 +128,14 @@ class _YouTubeViewerWidgetState extends State<YouTubeViewerWidget> {
       color: widget.config.backgroundColor,
       child: SafeArea(
         child: Center(
-          child: YoutubePlayer(controller: _controller!, aspectRatio: 16 / 9),
+          child: YoutubePlayer(
+            controller: _controller!,
+            aspectRatio: 16 / 9,
+            // The default WebP thumbnail is served without CORS headers, which
+            // Flutter web cannot decode (console errors, no thumbnail); the
+            // JPEG one allows any origin.
+            thumbnailFormat: ThumbnailFormat.jpeg,
+          ),
         ),
       ),
     );

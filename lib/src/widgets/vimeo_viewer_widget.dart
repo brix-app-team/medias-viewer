@@ -33,6 +33,7 @@ class VimeoViewerWidget extends StatefulWidget {
 
 class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
   String? _videoId;
+  String? _hash;
   String? _errorMessage;
 
   @override
@@ -56,6 +57,9 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
 
       setState(() {
         _videoId = videoId;
+        _hash =
+            widget.item.vimeoHash ??
+            MediaTypeDetector.extractVimeoHash(widget.item.url ?? '');
       });
     } catch (e) {
       setState(() {
@@ -85,7 +89,10 @@ class _VimeoViewerWidgetState extends State<VimeoViewerWidget> {
 
   String _buildIframeUrl() {
     final autoPlay = widget.autoPlay || widget.config.autoPlayVideo;
+    // Unlisted videos need their privacy hash, or Vimeo answers 403.
+    final hash = _hash == null ? '' : 'h=${Uri.encodeQueryComponent(_hash!)}&';
     return 'https://player.vimeo.com/video/$_videoId?'
+        '$hash'
         'autoplay=$autoPlay'
         '&loop=false'
         '&muted=false'

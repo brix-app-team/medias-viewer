@@ -573,4 +573,42 @@ void main() {
       expect(copied.backButtonPadding, newPadding);
     });
   });
+
+  group('Vimeo unlisted hash', () {
+    test('extracts the id and the hash of a share link', () {
+      const item = MediaItem.vimeoUrl(
+        'https://vimeo.com/1246601938/c117173049?share=copy&fl=sv&fe=ci',
+      );
+      expect(item.vimeoVideoId, '1246601938');
+      expect(item.vimeoHash, 'c117173049');
+    });
+
+    test('reads the hash from the h parameter of a player link', () {
+      const item = MediaItem.vimeoUrl(
+        'https://player.vimeo.com/video/1246601938?h=c117173049',
+      );
+      expect(item.vimeoVideoId, '1246601938');
+      expect(item.vimeoHash, 'c117173049');
+    });
+
+    test('returns no hash for a public video', () {
+      expect(
+        const MediaItem.vimeoUrl('https://vimeo.com/123456789').vimeoHash,
+        isNull,
+      );
+      expect(
+        const MediaItem.vimeoUrl(
+          'https://player.vimeo.com/video/123456789',
+        ).vimeoHash,
+        isNull,
+      );
+    });
+
+    test('returns no hash for a non Vimeo item', () {
+      expect(
+        MediaItem.youtubeUrl('https://youtu.be/abc?h=123').vimeoHash,
+        isNull,
+      );
+    });
+  });
 }

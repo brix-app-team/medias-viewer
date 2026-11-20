@@ -37,7 +37,7 @@ class MediaTypeDetector {
 
   /// Regular expressions for detecting Vimeo URLs.
   static final RegExp _vimeoRegex = RegExp(
-    r'^(?:https?:\/\/)?(?:www\.|player\.)?vimeo\.com\/(?:video\/)?(\d+)',
+    r'^(?:https?:\/\/)?(?:www\.|player\.)?vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-f]+))?',
     caseSensitive: false,
   );
 
@@ -78,6 +78,25 @@ class MediaTypeDetector {
   static String? extractVimeoVideoId(String url) {
     final match = _vimeoRegex.firstMatch(url);
     return match?.group(1);
+  }
+
+  /// Extracts the privacy hash of an unlisted Vimeo video.
+  ///
+  /// Unlisted videos only play in the embedded player when this hash is
+  /// passed as the `h` parameter; without it Vimeo answers 403.
+  ///
+  /// Supports formats:
+  /// - https://vimeo.com/VIDEO_ID/HASH
+  /// - https://player.vimeo.com/video/VIDEO_ID?h=HASH
+  ///
+  /// Returns null if the URL is not a Vimeo URL or carries no hash.
+  static String? extractVimeoHash(String url) {
+    final match = _vimeoRegex.firstMatch(url);
+    if (match == null) return null;
+    final pathHash = match.group(2);
+    if (pathHash != null) return pathHash;
+    final queryHash = Uri.tryParse(url)?.queryParameters['h'];
+    return (queryHash == null || queryHash.isEmpty) ? null : queryHash;
   }
 
   /// Extracts the start time parameter (t=) from a YouTube URL.

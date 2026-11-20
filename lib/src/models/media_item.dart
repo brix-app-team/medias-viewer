@@ -87,6 +87,8 @@ class MediaItem {
   /// - https://www.vimeo.com/VIDEO_ID
   /// - https://player.vimeo.com/video/VIDEO_ID
   /// - vimeo.com/VIDEO_ID (without protocol)
+  /// - https://vimeo.com/VIDEO_ID/HASH (unlisted video)
+  /// - https://player.vimeo.com/video/VIDEO_ID?h=HASH (unlisted video)
   ///
   /// Example:
   /// ```dart
@@ -211,6 +213,14 @@ class MediaItem {
   String? get vimeoVideoId {
     if (!isVimeo || url == null) return null;
     return MediaTypeDetector.extractVimeoVideoId(url!);
+  }
+
+  /// Returns the privacy hash of an unlisted Vimeo video, if the URL has one.
+  ///
+  /// Returns null if this is not a Vimeo media item or if the URL has no hash.
+  String? get vimeoHash {
+    if (!isVimeo || url == null) return null;
+    return MediaTypeDetector.extractVimeoHash(url!);
   }
 
   @override

@@ -63,9 +63,7 @@ class ImageViewerWidget extends StatelessWidget {
           : null,
       loadingBuilder: (context, event) => Center(
         child: CircularProgressIndicator(
-          value: event == null
-              ? 0
-              : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
+          value: _progressValue(event),
           color: Colors.white,
         ),
       ),
@@ -93,9 +91,7 @@ class ImageViewerWidget extends StatelessWidget {
             : null,
         loadingBuilder: (context, event) => Center(
           child: CircularProgressIndicator(
-            value: event == null
-                ? 0
-                : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
+            value: _progressValue(event),
             color: Colors.white,
           ),
         ),
@@ -106,5 +102,13 @@ class ImageViewerWidget extends StatelessWidget {
     }
 
     return photoView;
+  }
+
+  /// Progress of the image download, or `null` (indeterminate spinner) when
+  /// the total size is unknown, so the loader never looks frozen.
+  static double? _progressValue(ImageChunkEvent? event) {
+    final total = event?.expectedTotalBytes;
+    if (event == null || total == null || total <= 0) return null;
+    return (event.cumulativeBytesLoaded / total).clamp(0.0, 1.0);
   }
 }
